@@ -1,0 +1,1 @@
+Please remember that you will need the LWRP Add on installed in your project before using the LWRP variants of this water shaders. If you are using the Standard Edition, please unpack the LWRP files from the LWRP Add on before unpacking the LWRP variants of the Water Shader. Read the documentation for more information.

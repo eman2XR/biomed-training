@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 0a888809b05d9544f93b7fbb14c15d21
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sceneIcon: {fileID: 2800000, guid: d1f343e6d029b0f4a8bf1603a9d5e36b, type: 3}
+  - defaultReflectorMesh: {fileID: 4300002, guid: 0c6d4e850aec630408c70ece319edeaf,
+      type: 3}
+  - defaultReflectorMaterial: {fileID: 2100000, guid: ed030bbe1f52dbc45958bbafc62d64b4,
+      type: 2}
+  - externalReflectionTex: {instanceID: 0}
+  - externalReflectionDepth: {instanceID: 0}
+  - internalDepthShader: {fileID: 4800000, guid: 1f0ae68e6d361f94e8cfb4bb13eb1e35,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

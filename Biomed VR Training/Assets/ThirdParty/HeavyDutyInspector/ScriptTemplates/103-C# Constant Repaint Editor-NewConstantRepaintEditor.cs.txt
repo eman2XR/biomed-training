@@ -1,0 +1,11 @@
+using UnityEditor;
+
+[CustomEditor(typeof(#SCRIPTNAME#))]
+public class #SCRIPTNAME#Editor : Editor {
+	
+	public override void OnInspectorGUI ()
+	{
+		DrawDefaultInspector();
+		Repaint();		
+	}
+}

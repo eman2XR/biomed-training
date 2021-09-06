@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Glass 1
+  m_Shader: {fileID: 4800000, guid: f56404d5bb542874e83f2e067d9cca33, type: 3}
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Decal0Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Decal0Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Decal1Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Decal1Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 3, y: 2}
+        m_Offset: {x: -1.75, y: -0.02}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 2800000, guid: fde28ea1b9ec1e846a0fbe0bdf370144, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 2800000, guid: b42252938e0262d448dafeb52871e9a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 3, y: 2}
+        m_Offset: {x: -1.6, y: -0.02}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionDepth:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BlurMode: 2
+    - _BlurSize: 0
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _Decal0Metallic: 0.5
+    - _Decal0Smoothness: 0.5
+    - _Decal1Metallic: 0.5
+    - _Decal1Smoothness: 0.5
+    - _DepthBlurPower: 0.202
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EmissionMode: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.976
+    - _GlossyReflections: 1
+    - _MetSource: 0
+    - _Metallic: 0
+    - _Mode: 0
+    - _NormalDist: 0
+    - _OcclusionStrength: 0.6
+    - _Parallax: 0.0304
+    - _RefDistortion: 0.0256
+    - _RghSource: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0.4960394, g: 0.63671184, b: 0.6698113, a: 1}
+    - _Decal0Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Decal1Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
+    - _ReflectionTint: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}

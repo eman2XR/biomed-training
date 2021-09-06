@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000a9c1bfa9c3f14ab493769283ce39c, type: 3}
+  m_Name: LocalizationKeysConfig
+  m_EditorClassIdentifier: 
+  keyWordCategories:
+  - name: 
+    keywords: []
+  - name: Conversation
+    keywords:
+    - NPC_FAREWELL
+    - NPC_GREETINGS
+    - NPC_SMALL_TALK1
+    - NPC_SMALL_TALK2
+    - NPC_SMALL_TALK3
+  - name: UI
+    keywords:
+    - MENU_GENERIC_CANCEL
+    - MENU_GENERIC_CONFIRM
+    - MENU_MAIN_LOAD_GAME
+    - MENU_MAIN_MULTIPLAYER
+    - MENU_MAIN_NEW_GAME
+    - MENU_MAIN_QUIT_GAME
+    - MENU_MAIN_SETTINGS
+    - MENU_POPUP_QUIT_CONFIRMATION

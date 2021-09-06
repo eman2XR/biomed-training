@@ -1,1 +1,2 @@
-# biomed-training
+# Biomed Training
+ 
