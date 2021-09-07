@@ -43,10 +43,19 @@ public class OVRGrabbable : MonoBehaviour
     public string objectType;
 
     public bool isGrabbable = true;
+    public bool isTouchable = true;
+    public bool eventsOnly; //disable grabbing or touching but events still fired
+
     public bool IsGrabbable
     {
         set { isGrabbable = true; }
     }
+
+    public bool IsTouchable
+    {
+        set { isTouchable = true; }
+    }
+
 
     /// <summary>
     /// If true, the object can currently be grabbed.
@@ -137,10 +146,21 @@ public class OVRGrabbable : MonoBehaviour
         onGrabStart.Invoke();
     }
 
-	/// <summary>
-	/// Notifies the object that it has been released.
-	/// </summary>
-	virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    virtual public void GrabEventBegin(OVRGrabber hand)
+    {
+        grabbingHand = hand.transform;
+        onGrabStart.Invoke();
+    }
+    virtual public void GrabEventEnd(OVRGrabber hand)
+    {
+        grabbingHand = hand.transform;
+        onGrabEnd.Invoke();
+    }
+
+    /// <summary>
+    /// Notifies the object that it has been released.
+    /// </summary>
+    virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         grabbingHand = null;
 
@@ -150,8 +170,6 @@ public class OVRGrabbable : MonoBehaviour
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
         m_grabbedCollider = null;
-
-        onGrabEnd.Invoke();
     }
 
     public void OnTouch()

@@ -9,13 +9,16 @@ public class OVRGrabExtended : MonoBehaviour
         OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
         if (grabbable == null) return;
 
-        //highlight
-        if (otherCollider.gameObject.GetComponent<Outline>())
-            otherCollider.gameObject.GetComponent<Outline>().enabled = true;
+        if (grabbable.isTouchable)
+        {
+            //highlight
+            if (otherCollider.gameObject.GetComponent<Outline>())
+                otherCollider.gameObject.GetComponent<Outline>().enabled = true;
 
-        if (otherCollider.transform.parent) 
-           if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
-            otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = true;
+            if (otherCollider.transform.parent)
+                if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
+                    otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = true;
+        }
     }
 
     void OnTriggerExit(Collider otherCollider)
@@ -23,12 +26,15 @@ public class OVRGrabExtended : MonoBehaviour
         OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
         if (grabbable == null) return;
 
-        //unhighlight
-        if (otherCollider.gameObject.GetComponent<Outline>())
-            otherCollider.gameObject.GetComponent<Outline>().enabled = false;
+        if (grabbable.isTouchable)
+        {
+            //unhighlight
+            if (otherCollider.gameObject.GetComponent<Outline>())
+                otherCollider.gameObject.GetComponent<Outline>().enabled = false;
 
-        if (otherCollider.transform.parent)
-            if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
-                otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = false;
+            if (otherCollider.transform.parent)
+                if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
+                    otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = false;
+        }
     }
 }

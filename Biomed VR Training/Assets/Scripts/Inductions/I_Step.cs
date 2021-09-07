@@ -139,7 +139,7 @@ public class I_Step : MonoBehaviour {
 
         //highlight objectives
         foreach(GameObject obj in steps[stepNumber].objectsToHighlight)
-        //HighlightObject.instance.HighlightThisObject(obj);
+        HighlightObjects.instance.HighlightThisObject(obj);
 
         //debugs
         if(inductionMaster.otherSettings.printLogs)
@@ -171,7 +171,7 @@ public class I_Step : MonoBehaviour {
         }
 
         //stop all flashing
-        //HighlightObject.instance.StopAllFlashing();
+        HighlightObjects.instance.StopAllFlashing();
 
         //hand notification ----------------------------------------------------------
         if (steps[stepNumber].handNotification)
@@ -189,7 +189,7 @@ public class I_Step : MonoBehaviour {
     public void ObjectiveCompleted(GameObject objective)
     {
         objectivesCompleted++;
-        //HighlightObject.instance.StopFlashing(objective);
+        HighlightObjects.instance.StopFlashing(objective);
 
         //disable any objective related labels [needs fix (this currently just disables the first label int the list)]
        // if (steps[stepNumber].labels.Count > 0)
