@@ -23,7 +23,7 @@ public class Screw : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "screwdriver")
+        if (other.tag == "phillipsScrewdriver")
         {
             if (!hasBeenUsed)
             {
