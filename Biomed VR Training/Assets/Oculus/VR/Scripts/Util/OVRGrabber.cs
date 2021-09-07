@@ -182,12 +182,16 @@ public class OVRGrabber : MonoBehaviour
 		OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
         if (grabbable == null) return;
 
-            // Add the grabbable
-            int refCount = 0;
-            m_grabCandidates.TryGetValue(grabbable, out refCount);
-            m_grabCandidates[grabbable] = refCount + 1;
+        // Add the grabbable
+        int refCount = 0;
+        m_grabCandidates.TryGetValue(grabbable, out refCount);
+        m_grabCandidates[grabbable] = refCount + 1;
 
-            grabbable.OnTouch();
+        //highlight
+        //if (grabbable.GetComponent<Outline>())
+          //grabbable.GetComponent<Outline>().enabled = true;
+
+        grabbable.OnTouch();
     }
 
     void OnTriggerExit(Collider otherCollider)

@@ -48,14 +48,19 @@ public class OVRGrabbable : MonoBehaviour
 
     public bool IsGrabbable
     {
-        set { isGrabbable = true; }
+        get { return isGrabbable; }
+        set { isGrabbable = value; }
     }
-
     public bool IsTouchable
     {
-        set { isTouchable = true; }
+        get { return isGrabbable; }
+        set { isGrabbable = value; }
     }
-
+    public bool EventsOnly
+    {
+        get { return eventsOnly; }
+        set { eventsOnly = value; }
+    }
 
     /// <summary>
     /// If true, the object can currently be grabbed.

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Screw : MonoBehaviour
 {
-    public bool isDown;
+    public bool isEngaged;
     public float movingSpeed = 1;
     public float range = 0.02f;
     Collider collider;
@@ -38,7 +38,7 @@ public class Screw : MonoBehaviour
 
     IEnumerator EngageScrew()
     {
-        if (isDown)
+        if (isEngaged)
         {
             float elapsedTime = 0;
             float duration = 2f;
@@ -50,7 +50,7 @@ public class Screw : MonoBehaviour
 
                 yield return null;
             }
-            isDown = false;
+            isEngaged = false;
             yield return new WaitForSeconds(0.5f);
             onDown.Invoke();
             collider.enabled = true;
@@ -66,7 +66,7 @@ public class Screw : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            isDown = true;
+            isEngaged = true;
             yield return new WaitForSeconds(0.5f);
             onUp.Invoke();
             collider.enabled = true;
