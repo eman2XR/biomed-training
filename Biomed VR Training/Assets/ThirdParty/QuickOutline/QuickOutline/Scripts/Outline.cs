@@ -16,6 +16,8 @@ using UnityEngine;
 public class Outline : MonoBehaviour {
   private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
 
+  public Renderer customMesh;
+
   public enum Mode {
     OutlineAll,
     OutlineVisible,
@@ -82,8 +84,13 @@ public class Outline : MonoBehaviour {
 
   void Awake() {
 
-    // Cache renderers
-    renderers = GetComponentsInChildren<Renderer>();
+    if (customMesh) {
+        Renderer[] arr = new Renderer[1];
+        arr[0] = customMesh;
+        renderers = arr;
+    }
+    else
+        renderers = GetComponentsInChildren<Renderer>();
 
     // Instantiate outline materials
     outlineMaskMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineMask"));

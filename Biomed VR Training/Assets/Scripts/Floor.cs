@@ -9,7 +9,8 @@ public class Floor : MonoBehaviour
         if (other.GetComponent<SnapToOrigin>())
             other.GetComponent<SnapToOrigin>().SnapToOriginalLocation();
 
-        if (other.transform.parent.GetComponent<SnapToOrigin>())
+        if(other.transform.parent)
+         if (other.transform.parent.GetComponent<SnapToOrigin>())
             other.transform.parent.GetComponent<SnapToOrigin>().SnapToOriginalLocation();
     }
 }

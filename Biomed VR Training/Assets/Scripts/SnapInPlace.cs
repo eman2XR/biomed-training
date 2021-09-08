@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SnapInPlace : MonoBehaviour
 {
     public string objectType;
     public bool snapped;
+    public UnityEvent OnSnapped;
 
     OVRGrabbable grabbable;
     Collider grabbableCollider;
@@ -45,6 +47,8 @@ public class SnapInPlace : MonoBehaviour
                     this.GetComponent<AudioSource>().Play();
 
                     StartCoroutine(DisableObject());
+
+                    OnSnapped.Invoke();
 
                     snapped = true;
                 }

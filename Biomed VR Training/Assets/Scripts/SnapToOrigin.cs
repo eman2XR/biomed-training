@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SnapToOrigin : MonoBehaviour
 {
+    public Transform snapPoint; //optional transform to snap to differnt location
     Vector3 originalPos;
     Quaternion originalRot;
 
@@ -16,7 +17,15 @@ public class SnapToOrigin : MonoBehaviour
 
     public void SnapToOriginalLocation()
     {
-        transform.position = originalPos;
-        transform.rotation = originalRot;
+        if (snapPoint == null)
+        {
+            transform.position = originalPos;
+            transform.rotation = originalRot;
+        }
+        else
+        {
+            transform.position = snapPoint.position;
+            transform.rotation = snapPoint.rotation;
+        }
     }
 }

@@ -19,7 +19,7 @@
 
     private void Start()
     {
-        initialOffset = transform.position - target.position;
+        initialOffset = transform.localPosition - target.localPosition;
     }
 
     private void Update()
@@ -51,9 +51,9 @@
             {
                 // Vector3 targetPosition = target.TransformPoint(new Vector3(0, 5, -10));
                 if (keepInitialOffset)
-                    transform.position = Vector3.SmoothDamp(transform.position, target.position + initialOffset + offset, ref velocity, smoothPos);
+                    transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target.localPosition + initialOffset + offset, ref velocity, smoothPos);
                 else
-                     transform.position = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothPos);
+                     transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target.localPosition, ref velocity, smoothPos);
 
                 transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, Time.deltaTime * smoothRot);
             }

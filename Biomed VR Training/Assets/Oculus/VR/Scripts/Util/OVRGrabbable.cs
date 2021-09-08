@@ -45,6 +45,7 @@ public class OVRGrabbable : MonoBehaviour
     public bool isGrabbable = true;
     public bool isTouchable = true;
     public bool eventsOnly; //disable grabbing or touching but events still fired
+    public bool enableRigibodyOnDrop; 
 
     public bool IsGrabbable
     {
@@ -53,8 +54,8 @@ public class OVRGrabbable : MonoBehaviour
     }
     public bool IsTouchable
     {
-        get { return isGrabbable; }
-        set { isGrabbable = value; }
+        get { return isTouchable; }
+        set { isTouchable = value; }
     }
     public bool EventsOnly
     {
@@ -170,7 +171,10 @@ public class OVRGrabbable : MonoBehaviour
         grabbingHand = null;
 
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.isKinematic = m_grabbedKinematic;
+        if (!enableRigibodyOnDrop)
+            rb.isKinematic = m_grabbedKinematic;
+        else
+            rb.isKinematic = false;
         rb.velocity = linearVelocity;
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
@@ -179,12 +183,16 @@ public class OVRGrabbable : MonoBehaviour
 
     public void OnTouch()
     {
-        onTouchStart.Invoke();
+        if (isTouchable)
+        {
+            onTouchStart.Invoke();
+        }
     }
 
     public void OnUntouch()
     {
-        onTouchEnd.Invoke();
+        if (isTouchable)
+            onTouchEnd.Invoke();
     }
 
     void Awake()

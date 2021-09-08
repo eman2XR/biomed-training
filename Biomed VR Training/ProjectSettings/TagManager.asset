@@ -8,6 +8,8 @@ TagManager:
   - hook
   - gasket
   - phillipsScrewdriver
+  - lensCap
+  - newGasket
   layers:
   - Default
   - TransparentFX

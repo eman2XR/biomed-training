@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OVRGrabExtended : MonoBehaviour
 {
+    OVRGrabbable grabbable;
+
     void OnTriggerEnter(Collider otherCollider)
     {
         OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
@@ -12,12 +14,12 @@ public class OVRGrabExtended : MonoBehaviour
         if (grabbable.isTouchable)
         {
             //highlight
-            if (otherCollider.gameObject.GetComponent<Outline>())
-                otherCollider.gameObject.GetComponent<Outline>().enabled = true;
+            if (grabbable.GetComponent<Outline>())
+                grabbable.GetComponent<Outline>().enabled = true;
 
-            if (otherCollider.transform.parent)
-                if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
-                    otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = true;
+            //if (otherCollider.transform.parent)
+                //if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
+                    //otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = true;
         }
     }
 
@@ -29,12 +31,12 @@ public class OVRGrabExtended : MonoBehaviour
         if (grabbable.isTouchable)
         {
             //unhighlight
-            if (otherCollider.gameObject.GetComponent<Outline>())
-                otherCollider.gameObject.GetComponent<Outline>().enabled = false;
+            if (grabbable.GetComponent<Outline>())
+                grabbable.GetComponent<Outline>().enabled = false;
 
-            if (otherCollider.transform.parent)
-                if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
-                    otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = false;
+            //if (otherCollider.transform.parent)
+                //if (otherCollider.transform.parent.gameObject.GetComponent<Outline>())
+                    //otherCollider.transform.parent.gameObject.GetComponent<Outline>().enabled = false;
         }
     }
 }

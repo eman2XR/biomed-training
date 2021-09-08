@@ -54,6 +54,7 @@ public class Screw : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             onDown.Invoke();
             collider.enabled = true;
+            collider.isTrigger = false;
         }
         else
         {
@@ -70,6 +71,7 @@ public class Screw : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             onUp.Invoke();
             collider.enabled = true;
+            collider.isTrigger = false;
         }
     }
 }
