@@ -62,8 +62,8 @@ public class HandSwingTest : MonoBehaviour
 
     public void IsUsingScrew(Transform target)
     {
-        transform.position = target.GetChild(0).position;
-        transform.eulerAngles = new Vector3(target.GetChild(0).eulerAngles.x, target.GetChild(0).eulerAngles.y, target.GetChild(0).eulerAngles.z);
+        //transform.position = target.GetChild(0).position;
+        //transform.eulerAngles = new Vector3(target.GetChild(0).eulerAngles.x, target.GetChild(0).eulerAngles.y, target.GetChild(0).eulerAngles.z);
         transform.parent = target;
         //allowRotation = true;
     }
@@ -76,4 +76,5 @@ public class HandSwingTest : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = initRotation;
     }
+
 }
