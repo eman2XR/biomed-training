@@ -60,17 +60,39 @@ public class HandSwingTest : MonoBehaviour
         followRotation = true;
     }
 
-    public void IsUsingScrew(Transform target)
+    public void IsUsingKnob(Transform target, Transform targetPostion, bool leftOnly)
     {
-        //transform.position = target.GetChild(0).position;
-        //transform.eulerAngles = new Vector3(target.GetChild(0).eulerAngles.x, target.GetChild(0).eulerAngles.y, target.GetChild(0).eulerAngles.z);
+        if (leftOnly && !isLeft)
+            return;
+
         transform.parent = target;
+        transform.localPosition = targetPostion.localPosition;
+
+        if (isLeft)
+            transform.localEulerAngles = new Vector3(0, 115f, -10);
+        else
+            transform.localEulerAngles = new Vector3(0, -115f, 4);
+        //allowRotation = true;
+    }
+
+    public void IsUsingScrew(Transform target, Transform targetPostion, bool leftOnly)
+    {
+        if (leftOnly && !isLeft)
+            return;
+
+        transform.parent = target;
+        transform.localPosition = targetPostion.localPosition;
+
+        if (isLeft)
+            transform.localEulerAngles = new Vector3(0, 115f, -8.5f);
+        else
+            transform.localEulerAngles = new Vector3(0, -115f, 8.5f);
         //allowRotation = true;
     }
 
     public void ParentBack()
     {
-        print("parent back");
+        //print("parent back");
         followRotation = false;
         transform.parent = parent;
         transform.localPosition = Vector3.zero;

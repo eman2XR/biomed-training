@@ -88,6 +88,7 @@ public class SwivelObject : MonoBehaviour
     private bool driving = false;
     Quaternion initialRot;
 
+    bool vibrating;
 
     void Start()
     {
@@ -149,6 +150,11 @@ public class SwivelObject : MonoBehaviour
 
             if (currentToothIndex != previousToothIndex)
             {
+                // starts vibration on the right Touch controller
+                if (hand.name.Contains("Left"))
+                    ControllerHaptics.instance.CreateVibrateTime(2, 2, 3, OVRInput.Controller.LTouch, 0.15f);
+                else
+                    ControllerHaptics.instance.CreateVibrateTime(2, 2, 3, OVRInput.Controller.RTouch, 0.15f);
                 //VRTK_ControllerHaptics.TriggerHapticPulse(controllerReference, strenght, 0.01f, 0.01f);
                 previousToothIndex = currentToothIndex;
             }

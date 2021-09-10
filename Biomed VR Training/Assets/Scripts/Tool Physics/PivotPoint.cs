@@ -5,11 +5,16 @@ using UnityEngine;
 public class PivotPoint : MonoBehaviour
 {
     Rigidbody rb;
+    
     public Transform hand;
-    public bool move;
     public HandSwingTest handSwing;
-    //public Transform offset;
+    
+    public bool move;
     public bool isScrew;
+
+    public Transform targetPosition;
+    bool isBusy;
+    public bool leftHandOnly;
 
     private void Start()
     {
@@ -18,13 +23,32 @@ public class PivotPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isBusy)
+            return;
+
+        if (other.transform.parent)
+        {
+            if (other.transform.parent.GetComponent<OVRGrabbable>())
+            {
+                if (other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand)
+                {
+                    handSwing = other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand.GetComponent<HandSwingTest>();
+                    hand = handSwing.transform.parent;
+                    
+                    if (hand.name.Contains("Left"))
+                        ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.LTouch, 0.1f);
+                    else 
+                        ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.RTouch, 0.1f);
+                }
+            }
+        }
+
         if (isScrew)
         {
             if (other.tag == "phillipsScrewdriver")
             {
                 move = true;
-                handSwing.IsUsingScrew(this.transform);
-                StartCoroutine(Reset());
+                StartCoroutine(Attach());
             }
         }
         else
@@ -32,8 +56,7 @@ public class PivotPoint : MonoBehaviour
             if (other.tag == "screwdriver")
             {
                 move = true;
-                handSwing.IsUsingScrew(this.transform);
-                StartCoroutine(Reset());
+                StartCoroutine(Attach());
             }
         }
     }
@@ -47,11 +70,21 @@ public class PivotPoint : MonoBehaviour
         //
     }
 
-    IEnumerator Reset()
+    IEnumerator Attach()
     {
+        isBusy = true;
+        yield return new WaitForSeconds(0.1f);
+        if(isScrew)
+            handSwing.IsUsingScrew(this.transform, targetPosition, leftHandOnly);
+        else
+            handSwing.IsUsingKnob(this.transform, targetPosition, leftHandOnly);
+        //handSwing.transform.localPosition = targetPosition.localPosition;
         yield return new WaitForSeconds(1.5f);
         handSwing.ParentBack();
-        this.gameObject.SetActive(false);
+        move = false;
+        yield return new WaitForSeconds(1f);
+        isBusy = false;
+        //this.gameObject.SetActive(false);
     }
 
     private void LateUpdate()
