@@ -370,6 +370,70 @@ public class I_Master : MonoBehaviour {
         });
     }
 
+    public void StartStep(int stepToStart)
+    {
+        StopAllCoroutines();
+
+        currentStep = stepToStart;
+
+        if (currentStep == steps.Count)
+        {
+            print("Induction Finished");
+            EndOfInduction();
+            return;
+        }
+
+        //check for automatic step switching
+        if (steps[currentStep].switchesAutomatically)
+        {
+            //mark objectives as completed
+            foreach (I_Step step in this.GetComponentsInChildren<I_Step>())
+            {
+                step.transform.parent.GetChild(currentStep).GetComponent<I_Step>().allAbjectivesCompleted = true;
+            }
+
+            int curStep = currentStep;
+
+            Run.After(steps[currentStep].switchDelay, () =>
+            {
+                //if it's still the same step then switch (in case the user clicked the next arrow)
+                if (curStep == currentStep)
+                {
+                    print("switched step automat");
+                    StartNextStep();
+                }
+            });
+        }
+
+        //deactivate and activate next and back buttons to avoid pressing it twice in succession
+        nextButton.SetActive(false);
+        backButton.SetActive(false);
+        Run.After(1, () =>
+        {
+            nextButton.SetActive(true);
+            backButton.SetActive(true);
+        });
+
+        //steps counter ui
+        stepsCounterButton.GetComponent<TextMeshProUGUI>().text = currentStep + 1 + "/" + (steps.Count - 1);
+
+        //sound fx
+        otherSettings.changeStepSound.Play();
+
+        //debugs
+        if (otherSettings.printLogs)
+            print("starting step " + currentStep);
+
+        //send message to module to start the step
+        module.GetComponent<I_Module>().StartStep(stepToStart);
+
+        //check for events
+        Run.After(steps[currentStep].eventDelay, () =>
+        {
+            steps[currentStep].triggerEvent.Invoke();
+        });
+    }
+
     public void EndOfInduction()
     {
         //end timer

@@ -15,6 +15,9 @@ public class Screw : MonoBehaviour
     public UnityEvent onTouch;
     bool hasBeenUsed;
 
+    public bool useZAxis;
+    public bool useMinusZAxis;
+
     private void Start()
     {
         collider = this.GetComponent<Collider>();
@@ -62,8 +65,21 @@ public class Screw : MonoBehaviour
             float duration = 2f;
             while (elapsedTime < duration)
             {
-                this.transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
-                this.transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
+                if (useZAxis)
+                {
+                    transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
+                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, 0, range), Time.deltaTime * movingSpeed);
+                }
+                else if (useMinusZAxis)
+                {
+                    transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
+                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, 0, range), Time.deltaTime * movingSpeed);
+                }
+                else 
+                {
+                    transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
+                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
+                }
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }

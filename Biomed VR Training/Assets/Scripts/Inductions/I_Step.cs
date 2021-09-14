@@ -82,9 +82,7 @@ public class I_Step : MonoBehaviour {
 
         //setup any audio
         if (steps[stepNumber].audio)
-        {
             this.GetComponent<AudioSource>().clip = steps[stepNumber].audio;
-        }
 
         //check if compulsory
         if (steps[stepNumber].isCompulsory)
@@ -100,12 +98,11 @@ public class I_Step : MonoBehaviour {
 
         //run everyting with a slight delay to avoid conflicts 
         Run.After(0.7f, () => { 
+        
         //activate any labels
         foreach (GameObject label in labels)
-        {
-            if(label)
-            label.SetActive(true);
-        }
+           if(label)
+              label.SetActive(true);
 
         //setup objectives type
         foreach (GameObject objective in objectives)
@@ -133,17 +130,16 @@ public class I_Step : MonoBehaviour {
 
         //start custom objective
         if (steps[stepNumber].customObjective)
-        {
             steps[stepNumber].customObjective.gameObject.GetComponent<I_Objective>().StartCustomObjective(this);
-        }
 
         //highlight objectives
         foreach(GameObject obj in steps[stepNumber].objectsToHighlight)
-        HighlightObjects.instance.HighlightThisObject(obj);
+            HighlightObjects.instance.HighlightThisObject(obj);
 
         //debugs
         if(inductionMaster.otherSettings.printLogs)
-        print(gameObject.name + " has " + numberOfObjectives + " objectives");
+            print(gameObject.name + " has " + numberOfObjectives + " objectives");
+        
         });
 
         //play audio

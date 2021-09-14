@@ -79,6 +79,26 @@ public class I_Module : MonoBehaviour {
         }
     }
 
+    public void StartStep(int stepToStart)
+    {
+        //deactivate current step
+        currentStep.GetComponent<I_Step>().StopStep();
+
+        //find the step and activate it
+        if (NextChild(GetChildByName("Steps").transform.GetChild(stepToStart-1)))
+        {
+            NextChild(GetChildByName("Steps").transform.GetChild(stepToStart-1)).gameObject.SetActive(true);
+
+            //make next step currentStep
+            currentStep = NextChild(GetChildByName("Steps").transform.GetChild(stepToStart-1)).gameObject;
+
+            //start the step
+            currentStep.GetComponent<I_Step>().StartStep();
+        }
+        else
+            print("steps finished");
+    }
+
     public void StartPreviousStep()
     {
         //find the previous step and activate it

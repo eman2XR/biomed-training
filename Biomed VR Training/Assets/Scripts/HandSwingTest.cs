@@ -84,9 +84,11 @@ public class HandSwingTest : MonoBehaviour
         transform.localPosition = targetPostion.localPosition;
 
         if (isLeft)
-            transform.localEulerAngles = new Vector3(0, 115f, -8.5f);
+            transform.localEulerAngles = -targetPostion.localEulerAngles;
+        //transform.localEulerAngles = new Vector3(0, 115f, -8.5f);
         else
-            transform.localEulerAngles = new Vector3(0, -115f, 8.5f);
+            transform.localEulerAngles = targetPostion.localEulerAngles;
+        //transform.localEulerAngles = new Vector3(0, -115f, 8.5f);
         //allowRotation = true;
     }
 

@@ -32,12 +32,15 @@ public class SnapInPlace : MonoBehaviour
                 if (grabbable.objectType == objectType)
                 {
                     //force release the object
-                    grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                    if(grabbable.grabbingHand)
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
                     //disable collider and physics
                     other.enabled = false;
                     grabbable.GetComponent<Rigidbody>().isKinematic = true;
                     grabbable.GetComponent<Outline>().enabled = false;
+                    grabbable.isTouchable = false;
+                    grabbable.isGrabbable = false;
 
                     //snap to position
                     grabbable.transform.position = this.transform.position;
