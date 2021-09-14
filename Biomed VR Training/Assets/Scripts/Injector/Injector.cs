@@ -8,8 +8,14 @@ public class Injector : MonoBehaviour
     public bool isInverted;
     public bool isHorizontal;
     public bool backScrewsRemoved;
+    public bool strainReliefLoosened;
+    public bool backPanelOpened;
+    public bool connector3Removed;
+
+    public Transform backPanel;
 
     int counter;
+    int counter1;
 
     void Update()
     {
@@ -37,4 +43,41 @@ public class Injector : MonoBehaviour
         if (counter == 4)
             backScrewsRemoved = true;
     }
+
+    //triggered when screws are placed in the snap positions
+    public void StrainReliefScrewRemoved()
+    {
+        counter1++;
+        if (counter1 == 2)
+            strainReliefLoosened = true;
+    }
+
+    //triggered by the animation
+    public void BackPanelOpened()
+    {
+        backPanelOpened = true;
+    }
+
+    //triggered by the grabbale obj
+    public void Connector3Grabbed(OVRGrabbable grabbable)
+    {
+        StartCoroutine(CoonectorGrabbedDelay(grabbable));
+    }
+
+    IEnumerator CoonectorGrabbedDelay(OVRGrabbable grabbable)
+    {
+        yield return new WaitForSeconds(0.5f);
+        connector3Removed = true;
+        //force release the object
+        if (grabbable.grabbingHand)
+            grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+
+        //disable collider and physics
+        grabbable.GetComponent<Rigidbody>().isKinematic = true;
+        grabbable.GetComponent<Outline>().enabled = false;
+        grabbable.GetComponent<Collider>().enabled = false;
+
+        grabbable.transform.parent = backPanel;
+    }
+
 }

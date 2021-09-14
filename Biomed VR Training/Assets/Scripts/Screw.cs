@@ -16,7 +16,7 @@ public class Screw : MonoBehaviour
     bool hasBeenUsed;
 
     public bool useZAxis;
-    public bool useMinusZAxis;
+    public bool useMinusYAxis;
 
     private void Start()
     {
@@ -70,10 +70,10 @@ public class Screw : MonoBehaviour
                     transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
                     transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, 0, range), Time.deltaTime * movingSpeed);
                 }
-                else if (useMinusZAxis)
+                else if (useMinusYAxis)
                 {
                     transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, 0, range), Time.deltaTime * movingSpeed);
+                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
                 }
                 else 
                 {
