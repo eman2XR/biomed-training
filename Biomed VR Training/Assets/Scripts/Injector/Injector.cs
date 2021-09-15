@@ -11,6 +11,7 @@ public class Injector : MonoBehaviour
     public bool strainReliefLoosened;
     public bool backPanelOpened;
     public bool connector3Removed;
+    public bool connector12Removed;
 
     public Transform backPanel;
 
@@ -59,15 +60,26 @@ public class Injector : MonoBehaviour
     }
 
     //triggered by the grabbale obj
-    public void Connector3Grabbed(OVRGrabbable grabbable)
+    public void Connector12Grabbed(OVRGrabbable grabbable)
     {
-        StartCoroutine(CoonectorGrabbedDelay(grabbable));
+        StartCoroutine(CoonectorGrabbedDelay(grabbable, "12"));
     }
 
-    IEnumerator CoonectorGrabbedDelay(OVRGrabbable grabbable)
+    //triggered by the grabbale obj
+    public void Connector3Grabbed(OVRGrabbable grabbable)
+    {
+        StartCoroutine(CoonectorGrabbedDelay(grabbable, "3"));
+        Destroy(backPanel.gameObject.GetComponent<Animator>());
+    }
+
+    IEnumerator CoonectorGrabbedDelay(OVRGrabbable grabbable, string connector)
     {
         yield return new WaitForSeconds(0.5f);
-        connector3Removed = true;
+        if (connector == "12")
+            connector12Removed = true;
+        else
+            connector3Removed = true;
+
         //force release the object
         if (grabbable.grabbingHand)
             grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);

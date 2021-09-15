@@ -62,7 +62,11 @@ public class SnapInPlace : MonoBehaviour
     IEnumerator DisableObject()
     {
         yield return new WaitForSeconds(0.5f);
-        this.GetComponent<Renderer>().enabled = false;
+        if (this.GetComponent<Renderer>())
+            this.GetComponent<Renderer>().enabled = false;
+        else
+            this.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+
         this.GetComponent<Collider>().enabled = false;
 
         //this.gameObject.SetActive(false);
