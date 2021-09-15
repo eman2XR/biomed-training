@@ -12,11 +12,13 @@ public class Injector : MonoBehaviour
     public bool backPanelOpened;
     public bool connector3Removed;
     public bool connector12Removed;
+    public bool frontScrewRemoved;
 
     public Transform backPanel;
 
     int counter;
     int counter1;
+    int counter2;
 
     void Update()
     {
@@ -90,6 +92,14 @@ public class Injector : MonoBehaviour
         grabbable.GetComponent<Collider>().enabled = false;
 
         grabbable.transform.parent = backPanel;
+    }
+
+    //triggered when screws are placed in the snap positions
+    public void FrontPanelScrewRemoved()
+    {
+        counter2++;
+        if (counter2 == 4)
+            frontScrewRemoved = true;
     }
 
 }
