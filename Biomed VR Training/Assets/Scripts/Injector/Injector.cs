@@ -11,7 +11,8 @@ public class Injector : MonoBehaviour
     public bool strainReliefLoosened;
     public bool backPanelOpened;
     public bool connector3Removed;
-    public bool connector12Removed;
+    public bool connector1Removed;
+    public bool connector2Removed;
     public bool frontScrewRemoved;
 
     public Transform backPanel;
@@ -62,9 +63,15 @@ public class Injector : MonoBehaviour
     }
 
     //triggered by the grabbale obj
-    public void Connector12Grabbed(OVRGrabbable grabbable)
+    public void Connector1Grabbed(OVRGrabbable grabbable)
     {
-        StartCoroutine(CoonectorGrabbedDelay(grabbable, "12"));
+        StartCoroutine(CoonectorGrabbedDelay(grabbable, "1"));
+    }
+
+    //triggered by the grabbale obj
+    public void Connector2Grabbed(OVRGrabbable grabbable)
+    {
+        StartCoroutine(CoonectorGrabbedDelay(grabbable, "2"));
     }
 
     //triggered by the grabbale obj
@@ -77,9 +84,11 @@ public class Injector : MonoBehaviour
     IEnumerator CoonectorGrabbedDelay(OVRGrabbable grabbable, string connector)
     {
         yield return new WaitForSeconds(0.5f);
-        if (connector == "12")
-            connector12Removed = true;
-        else
+        if (connector == "1")
+            connector1Removed = true;
+        else if(connector == "2")
+            connector2Removed = true;
+        else if (connector == "3")
             connector3Removed = true;
 
         //force release the object
