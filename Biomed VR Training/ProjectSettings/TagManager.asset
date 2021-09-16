@@ -10,6 +10,9 @@ TagManager:
   - phillipsScrewdriver
   - lensCap
   - newGasket
+  - gasket 1
+  - gasket 2
+  - gasket 3
   layers:
   - Default
   - TransparentFX

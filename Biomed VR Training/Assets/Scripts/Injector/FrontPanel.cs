@@ -10,12 +10,15 @@ public class FrontPanel : MonoBehaviour
     public Transform newGasket1;
     public Transform oldGasket1;
 
+    [Space(10)]
     public Transform newGasket2;
     public Transform oldGasket2;
-
+   
+    [Space(10)]
     public Transform newGasket3;
     public Transform oldGasket3;
 
+    [Space(10)]
     public bool newGasketsIn;
     int counter;
 
