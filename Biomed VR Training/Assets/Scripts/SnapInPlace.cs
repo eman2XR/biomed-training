@@ -64,7 +64,7 @@ public class SnapInPlace : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (this.GetComponent<Renderer>())
             this.GetComponent<Renderer>().enabled = false;
-        else
+        if (this.transform.GetChild(0).GetComponent<Renderer>())
             this.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
 
         this.GetComponent<Collider>().enabled = false;

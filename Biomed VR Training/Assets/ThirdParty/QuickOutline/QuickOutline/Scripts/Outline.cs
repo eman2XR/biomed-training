@@ -81,6 +81,29 @@ public class Outline : MonoBehaviour {
   private Material outlineFillMaterial;
 
   private bool needsUpdate;
+  
+  public void UpdateRenderers()
+    {
+        if (customMesh)
+        {
+            Renderer[] arr = new Renderer[1];
+            arr[0] = customMesh;
+            renderers = arr;
+        }
+        else
+            renderers = GetComponentsInChildren<Renderer>();
+
+        foreach (var renderer in renderers)
+        {
+            // Append outline shaders
+            var materials = renderer.sharedMaterials.ToList();
+
+            materials.Add(outlineMaskMaterial);
+            materials.Add(outlineFillMaterial);
+
+            renderer.materials = materials.ToArray();
+        }
+    }
 
   void Awake() {
 
@@ -118,7 +141,7 @@ public class Outline : MonoBehaviour {
       renderer.materials = materials.ToArray();
     }
   }
-
+  
   void OnValidate() {
 
     // Update material properties
@@ -163,8 +186,9 @@ public class Outline : MonoBehaviour {
     Destroy(outlineMaskMaterial);
     Destroy(outlineFillMaterial);
   }
-
-  void Bake() {
+  
+  
+    void Bake() {
 
     // Generate smooth normals for each mesh
     var bakedMeshes = new HashSet<Mesh>();

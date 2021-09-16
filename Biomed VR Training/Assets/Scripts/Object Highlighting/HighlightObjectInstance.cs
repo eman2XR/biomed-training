@@ -38,6 +38,7 @@ public class HighlightObjectInstance : MonoBehaviour
 
     IEnumerator FlashObject(float delay)
     {
+        //outline.UpdateRenderers();
         yield return new WaitForSeconds(delay);
         //print("flash");
 

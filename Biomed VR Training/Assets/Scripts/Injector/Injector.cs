@@ -6,7 +6,10 @@ public class Injector : MonoBehaviour
 {
     //used by Induction master to track if step completed
     public bool isInverted;
-    public bool isHorizontal;
+    public bool is45Back;
+    public bool is45Foward;
+    public bool isUninverted;
+
     public bool backScrewsRemoved;
     public bool strainReliefLoosened;
     public bool backPanelOpened;
@@ -23,23 +26,54 @@ public class Injector : MonoBehaviour
     int counter2;
     int counter3;
 
+    OVRGrabbable grabbable;
+
+    private void Start()
+    {
+        grabbable = this.GetComponent<OVRGrabbable>();
+    }
+
     void Update()
     {
         if(!isInverted)
         {
-            if (this.transform.localEulerAngles.z == 170)
+            if (this.transform.localEulerAngles.z >= 170)
             {
+                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
                 isInverted = true;
             }
         }
 
-        if (isInverted && !isHorizontal)
+        if (isInverted && !is45Back)
         {
-            if (this.transform.localEulerAngles.z < -90)
+            if (this.transform.localEulerAngles.z <= 125)
             {
-                isHorizontal = true;
+                this.GetComponent<Collider>().enabled = false;
+                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                is45Back = true;
             }
         }
+
+        if (isInverted && is45Back && !is45Foward)
+        {
+            if (this.transform.localEulerAngles.z >= 180)
+            {
+                this.GetComponent<Collider>().enabled = false;
+                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                is45Foward = true;
+            }
+        }
+
+        if (isInverted && is45Back && is45Foward && !isUninverted)
+        {
+            if (this.transform.localEulerAngles.z <= 20)
+            {
+                this.GetComponent<Collider>().enabled = false;
+                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                isUninverted = true;
+            }
+        }
+
     }
 
     //triggered when screws are placed in the snap positions
