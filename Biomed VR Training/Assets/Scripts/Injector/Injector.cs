@@ -14,12 +14,14 @@ public class Injector : MonoBehaviour
     public bool connector1Removed;
     public bool connector2Removed;
     public bool frontScrewRemoved;
+    public bool visualInspectionComplete;
 
     public Transform backPanel;
 
     int counter;
     int counter1;
     int counter2;
+    int counter3;
 
     void Update()
     {
@@ -109,6 +111,14 @@ public class Injector : MonoBehaviour
         counter2++;
         if (counter2 == 4)
             frontScrewRemoved = true;
+    }
+
+    //triggered when gazing on each side of the injector (gaze buttons)
+    public void VisualInspectionSideCompleted()
+    {
+        counter3++;
+        if (counter3 == 4)
+            visualInspectionComplete = true;
     }
 
 }
