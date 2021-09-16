@@ -66,7 +66,7 @@ public class Injector : MonoBehaviour
 
         if (isInverted && is45Back && is45Foward && !isUninverted)
         {
-            if (this.transform.localEulerAngles.z <= 20)
+            if (this.transform.localEulerAngles.z <= 5)
             {
                 this.GetComponent<Collider>().enabled = false;
                 grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
