@@ -18,7 +18,6 @@ public class Injector : MonoBehaviour
     public bool connector2Removed;
     public bool frontScrewRemoved;
     public bool visualInspectionComplete;
-
     public Transform backPanel;
 
     int counter;

@@ -7,10 +7,16 @@ public class Floor : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<SnapToOrigin>())
-            other.GetComponent<SnapToOrigin>().SnapToOriginalLocation();
+            StartCoroutine(Delay(other.GetComponent<SnapToOrigin>()));
 
         if(other.transform.parent)
          if (other.transform.parent.GetComponent<SnapToOrigin>())
-            other.transform.parent.GetComponent<SnapToOrigin>().SnapToOriginalLocation();
+                StartCoroutine(Delay(other.transform.parent.GetComponent<SnapToOrigin>()));
+    }
+
+    IEnumerator Delay(SnapToOrigin obj)
+    {
+        yield return new WaitForSeconds(1);
+        obj.SnapToOriginalLocation();
     }
 }

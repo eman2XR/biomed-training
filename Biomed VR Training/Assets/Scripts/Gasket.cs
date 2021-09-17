@@ -29,16 +29,19 @@ public class Gasket : MonoBehaviour
     IEnumerator AdjustFollowSmooth()
     {
         float offset = 0;
+        float offsetY = 0;
+
         yield return new WaitForSeconds(0.65f);
         foreach (Follow linePoint in linePoints)
             linePoint.smoothPos = 0.015f;
-        yield return new WaitForSeconds(0.25f);
+        //yield return new WaitForSeconds(0.25f);
         foreach (Follow linePoint in linePoints)
         {
             if (frontPanelgasket)
             {
                 offset = Random.Range(-0.08f, 0.08f);
-                linePoint.offset = new Vector3(offset, 0.08f, offset);
+                offsetY -= 0.02f;
+                linePoint.offset = new Vector3(-0.17f, 0.3f, 0.18f);
             }
             else
             {

@@ -8,6 +8,7 @@ public class IntroSceneManager : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(4);
+        UserProgress.loadingScreenSeen = true;
         ChangeScene();
     }
 
