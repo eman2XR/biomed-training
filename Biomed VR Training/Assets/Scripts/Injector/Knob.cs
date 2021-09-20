@@ -40,6 +40,8 @@ public class Knob : MonoBehaviour
     float initialKnobRot;
     float initialControllerPos;
 
+    float lastAngle;
+
     private void Start()
     {
         
@@ -91,6 +93,7 @@ public class Knob : MonoBehaviour
 
             //rotate knob /UPDATE: this value now is very low so that most of the movement is done by moving the controller left and right instead of rotating your wrist
 
+
             if (axis == "y")
             {
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, ((initialControllerRot - controller.transform.rotation.y) * (knobSensitivity * 1)) + initialKnobRot, transform.localEulerAngles.z);
@@ -105,10 +108,10 @@ public class Knob : MonoBehaviour
             //        value = this.transform.localRotation.x + sideMovementMultiplier;
             //    else value = -this.transform.localRotation.x + sideMovementMultiplier;
 
-            if (axis == "y")
-                if (!invertValue)
-                    value = this.transform.localEulerAngles.y;
-                else value = -this.transform.localEulerAngles.y;
+            //if (axis == "y")
+            //    if (!invertValue)
+            //        value = this.transform.localEulerAngles.y;
+            //    else value = -this.transform.localEulerAngles.y;
 
             //else if (axis == "z")
             //    if (!invertValue)
@@ -116,7 +119,18 @@ public class Knob : MonoBehaviour
             //    else value = -this.transform.localRotation.z + sideMovementMultiplier;
             //----------------------------------------------------------------------------------------------------------------------------
 
-            //GetNormalizedValue();
+            if(transform.localEulerAngles.y - lastAngle > 5)
+            {
+                value++;
+                lastAngle = transform.localEulerAngles.y;
+            }
+            else if (lastAngle - transform.localEulerAngles.y > 5)
+            {
+                value--;
+                lastAngle = transform.localEulerAngles.y;
+            }
+
+            GetNormalizedValue();
 
             //-------haptics----------------------------------------------------------
             currentToothIndex = Mathf.RoundToInt(value * teethCount - 0.5f);
@@ -138,8 +152,7 @@ public class Knob : MonoBehaviour
 
     public void GetNormalizedValue()
     {
-        //value = (value - -1) * (1 - -1) / (1 - 0);
-        value = ExtensionMethods.RemapValue(value, -1, 1, 0, 1);
+        
     }
 
     public void Ungrabbed()

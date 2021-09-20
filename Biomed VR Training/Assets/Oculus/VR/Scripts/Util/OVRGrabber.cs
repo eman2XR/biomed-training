@@ -268,7 +268,7 @@ public class OVRGrabber : MonoBehaviour
         {
             m_grabbedObj = closestGrabbable;
             closestGrabbable.GrabEventBegin(this);
-            print("grabbed");
+            //print("grabbed");
             return;
         }
 
