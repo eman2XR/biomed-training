@@ -18,12 +18,15 @@ public class Injector : MonoBehaviour
     public bool connector2Removed;
     public bool frontScrewRemoved;
     public bool visualInspectionComplete;
+    public bool knobsBackIn;
+
     public Transform backPanel;
 
     int counter;
     int counter1;
     int counter2;
     int counter3;
+    int counter4;
 
     OVRGrabbable grabbable;
 
@@ -38,40 +41,41 @@ public class Injector : MonoBehaviour
         {
             if (this.transform.localEulerAngles.z >= 170)
             {
-                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                if(grabbable.grabbingHand)
+                    grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
                 isInverted = true;
             }
         }
 
-        if (isInverted && !is45Back)
-        {
-            if (this.transform.localEulerAngles.z <= 125)
-            {
-                this.GetComponent<Collider>().enabled = false;
-                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
-                is45Back = true;
-            }
-        }
+        //if (isInverted && !is45Back)
+        //{
+        //    if (this.transform.localEulerAngles.z <= 125)
+        //    {
+        //        this.GetComponent<Collider>().enabled = false;
+        //        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        //        is45Back = true;
+        //    }
+        //}
 
-        if (isInverted && is45Back && !is45Foward)
-        {
-            if (this.transform.localEulerAngles.z >= 180)
-            {
-                this.GetComponent<Collider>().enabled = false;
-                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
-                is45Foward = true;
-            }
-        }
+        //if (isInverted && is45Back && !is45Foward)
+        //{
+        //    if (this.transform.localEulerAngles.z >= 180)
+        //    {
+        //        this.GetComponent<Collider>().enabled = false;
+        //        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        //        is45Foward = true;
+        //    }
+        //}
 
-        if (isInverted && is45Back && is45Foward && !isUninverted)
-        {
-            if (this.transform.localEulerAngles.z <= 5)
-            {
-                this.GetComponent<Collider>().enabled = false;
-                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
-                isUninverted = true;
-            }
-        }
+        //if (isInverted && is45Back && is45Foward && !isUninverted)
+        //{
+        //    if (this.transform.localEulerAngles.z <= 5)
+        //    {
+        //        this.GetComponent<Collider>().enabled = false;
+        //        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        //        isUninverted = true;
+        //    }
+        //}
 
     }
 
@@ -152,6 +156,14 @@ public class Injector : MonoBehaviour
         counter3++;
         if (counter3 == 4)
             visualInspectionComplete = true;
+    }
+
+    //triggered by the knobs snap pos
+    public void KnobBackIn()
+    {
+        counter4++;
+        if (counter4 == 2)
+            knobsBackIn = true;
     }
 
 }

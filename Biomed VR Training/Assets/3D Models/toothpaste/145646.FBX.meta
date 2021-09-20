@@ -1,0 +1,145 @@
+fileFormatVersion: 2
+guid: cfb2b45a5a9795d44880238306626fff
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: 4702173052955519209
+    second: tube|Box001|Take 001|BaseLayer
+  - first:
+      74: 4538602389361179705
+    second: tube|Cone001|Take 001|BaseLayer
+  - first:
+      74: -4393467709423993312
+    second: tube|Cone001|Take 001|BaseLayer.001
+  - first:
+      74: 3430981833202349202
+    second: tube|Cone001|Take 001|BaseLayer.002
+  - first:
+      74: -2464293620851246669
+    second: tube|Cone001|Take 001|BaseLayer.003
+  - first:
+      74: -5131442768666057017
+    second: tube|Line001|Take 001|BaseLayer
+  - first:
+      74: 5749998773494954569
+    second: tube|Sky001|Take 001|BaseLayer
+  - first:
+      74: -8796758429003212288
+    second: tube|Spot001|Take 001|BaseLayer
+  - first:
+      74: -6397720562238810197
+    second: cap|Box001|Take 001|BaseLayer
+  - first:
+      74: -2774084488467964149
+    second: cap|Cone001|Take 001|BaseLayer
+  - first:
+      74: -7918202372920973587
+    second: cap|Cone001|Take 001|BaseLayer.001
+  - first:
+      74: -340550660503338948
+    second: cap|Cone001|Take 001|BaseLayer.002
+  - first:
+      74: 6003534674809832181
+    second: cap|Cone001|Take 001|BaseLayer.003
+  - first:
+      74: -5064945886552540494
+    second: cap|Line001|Take 001|BaseLayer
+  - first:
+      74: 727759394706281348
+    second: cap|Sky001|Take 001|BaseLayer
+  - first:
+      74: 4294989092685907755
+    second: cap|Spot001|Take 001|BaseLayer
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

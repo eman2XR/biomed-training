@@ -8,6 +8,7 @@ public class SnapInPlace : MonoBehaviour
     public string objectType;
     public bool snapped;
     public UnityEvent OnSnapped;
+    public bool parent;
 
     OVRGrabbable grabbable;
     Collider grabbableCollider;
@@ -37,10 +38,11 @@ public class SnapInPlace : MonoBehaviour
 
                     //disable collider and physics
                     other.enabled = false;
+                    grabbable.grabPoints[0].enabled = false;
                     grabbable.GetComponent<Rigidbody>().isKinematic = true;
                     grabbable.GetComponent<Outline>().enabled = false;
-                    grabbable.isTouchable = false;
-                    grabbable.isGrabbable = false;
+                    //grabbable.isTouchable = false;
+                    //grabbable.isGrabbable = false;
 
                     //snap to position
                     grabbable.transform.position = this.transform.position;
@@ -48,6 +50,9 @@ public class SnapInPlace : MonoBehaviour
 
                     //audio
                     this.GetComponent<AudioSource>().Play();
+
+                    if (parent)
+                        grabbable.transform.parent = this.transform.parent;
 
                     StartCoroutine(DisableObject());
 
@@ -64,7 +69,7 @@ public class SnapInPlace : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (this.GetComponent<Renderer>())
             this.GetComponent<Renderer>().enabled = false;
-        if (this.transform.GetChild(0))
+        if (transform.childCount > 0)
             if (this.transform.GetChild(0).GetComponent<Renderer>())
                 this.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
 
