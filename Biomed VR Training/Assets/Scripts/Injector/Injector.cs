@@ -19,6 +19,12 @@ public class Injector : MonoBehaviour
     public bool frontScrewRemoved;
     public bool visualInspectionComplete;
     public bool knobsBackIn;
+    public bool pistonHeadsUp;
+    public bool pistonRubberHeadsRemoved;
+    public bool pistonHeadsGreased;
+    public bool pistonHeadsReinstalled;
+    public bool pistonRubberSleevesDown;
+    public bool pistonHeadsGreasedAgain;
 
     public Transform backPanel;
 
@@ -27,6 +33,11 @@ public class Injector : MonoBehaviour
     int counter2;
     int counter3;
     int counter4;
+    int counter5;
+    int counter6;
+    int counter7;
+    int counter8;
+    int counter9;
 
     OVRGrabbable grabbable;
 
@@ -164,6 +175,52 @@ public class Injector : MonoBehaviour
         counter4++;
         if (counter4 == 2)
             knobsBackIn = true;
+    }
+
+    //triggered by the piston heads script
+    public void PistonHeadUp()
+    {
+        counter5++;
+        if (counter5 == 2)
+            pistonHeadsUp = true;
+    }
+
+    //triggered by the piston heads Grabbable
+    public void PistonRubberHeadRemoved()
+    {
+        counter6++;
+        if (counter6 == 2)
+            pistonRubberHeadsRemoved = true;
+    }
+
+    //triggered by the piston heads trigger collider
+    public void PistonHeadGreased()
+    {
+        counter7++;
+        if (counter7 == 2)
+        {
+            pistonHeadsGreased = true;
+        }
+        if (counter7 == 4)
+        {
+            pistonHeadsGreasedAgain = true;
+        }
+    }
+
+    //triggered by the piston heads trigger collide
+    public void PistonHeadReinstalled()
+    {
+        counter8++;
+        if (counter8 == 2)
+            pistonHeadsReinstalled = true;
+    }
+
+    //triggered by the piston heads rubber sleeve grabbable
+    public void PistonRubberSleeveDown()
+    {
+        counter9++;
+        if (counter9 == 2)
+            pistonRubberSleevesDown = true;
     }
 
 }

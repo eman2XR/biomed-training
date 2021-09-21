@@ -11,6 +11,8 @@ public class I_Module : MonoBehaviour {
 
     List<GameObject> stepsList = new List<GameObject>();
 
+    bool waited = true;
+
 	public void StartModule(GameObject stepPrefab, List<I_Master.Steps> steps)
     {
         //deactivate all transforms in Module 1
@@ -59,38 +61,46 @@ public class I_Module : MonoBehaviour {
 
     public void StartNextStep()
     {
-        //deactivate current step
-        currentStep.GetComponent<I_Step>().StopStep();
-
-        //find the next step and activate it
-        if (NextChild(currentStep.transform))
+        if (waited)
         {
-            NextChild(currentStep.transform).gameObject.SetActive(true);
+            StartCoroutine(Delay());
+            print("starting next step");
 
-            //make next step currentStep
-            currentStep = NextChild(currentStep.transform).gameObject;
+            //deactivate current step
+            currentStep.GetComponent<I_Step>().StopStep();
 
-            //start the step
-            currentStep.GetComponent<I_Step>().StartStep();
-        }
-        else
-        {
-            print("steps finished");
+            //find the next step and activate it
+            if (NextChild(currentStep.transform))
+            {
+                NextChild(currentStep.transform).gameObject.SetActive(true);
+
+                //make next step currentStep
+                currentStep = NextChild(currentStep.transform).gameObject;
+
+                //start the step
+                currentStep.GetComponent<I_Step>().StartStep();
+            }
+            else
+            {
+                print("steps finished");
+            }
         }
     }
 
     public void StartStep(int stepToStart)
     {
+        StartCoroutine(Delay());
+
         //deactivate current step
         currentStep.GetComponent<I_Step>().StopStep();
 
         //find the step and activate it
-        if (NextChild(GetChildByName("Steps").transform.GetChild(stepToStart-1)))
+        if (GetChildByName("Steps").transform.GetChild(stepToStart+1))
         {
-            NextChild(GetChildByName("Steps").transform.GetChild(stepToStart-1)).gameObject.SetActive(true);
+            GetChildByName("Steps").transform.GetChild(stepToStart+1).gameObject.SetActive(true);
 
-            //make next step currentStep
-            currentStep = NextChild(GetChildByName("Steps").transform.GetChild(stepToStart-1)).gameObject;
+            //make it step currentStep
+            currentStep = GetChildByName("Steps").transform.GetChild(stepToStart+1).gameObject;
 
             //start the step
             currentStep.GetComponent<I_Step>().StartStep();
@@ -165,4 +175,10 @@ public class I_Module : MonoBehaviour {
         return trans.transform.parent.GetChild(thisIndex - 1);
     }
 
+    IEnumerator Delay()
+    {
+        waited = false;
+        yield return new WaitForSeconds(1);
+        waited = true;
+    }
 }

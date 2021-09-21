@@ -94,6 +94,8 @@ public class I_Step : MonoBehaviour {
 
     public void StartStep()
     {
+        print("starting step");
+
         //inductionMaster.currentStep = inductionMaster.currentStep + 1;
 
         //run everyting with a slight delay to avoid conflicts 

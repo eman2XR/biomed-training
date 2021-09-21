@@ -13,6 +13,9 @@ TagManager:
   - gasket 1
   - gasket 2
   - gasket 3
+  - button
+  - grease
+  - rubber boot
   layers:
   - Default
   - TransparentFX

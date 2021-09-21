@@ -17,6 +17,9 @@ public class Module2 : MonoBehaviour
     public I_Master induction;
     public int startingStep = 10;
 
+    public int secondEventDelay = 1;
+    public UnityEvent onModuleStartWithDelay;
+
     private void OnEnable()
     {
         StartCoroutine(Delay());
@@ -36,5 +39,8 @@ public class Module2 : MonoBehaviour
         }
 
         onModule2Start.Invoke();
+
+        yield return new WaitForSeconds(secondEventDelay);
+        onModuleStartWithDelay.Invoke();
     }
 }

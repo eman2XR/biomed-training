@@ -1,21 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Piston : MonoBehaviour
 {
     public Knob knob;
-    float initialY;
+    float initialX;
+    public float targetPos;
+    public UnityEvent onTargetReached;
 
     void Start()
     {
-        initialY = this.transform.localPosition.y;
+        initialX = this.transform.localPosition.x;
     }
 
     void Update()
     {
-        this.transform.localPosition = new Vector3(transform.localPosition.x, initialY + ExtensionMethods.RemapValue(knob.value, 0, 100, 0, 0.1f), transform.localPosition.z);
+        this.transform.localPosition = new Vector3(initialX - ExtensionMethods.RemapValue(knob.outAngle, 0, 100, 0, 0.3f), transform.localPosition.y, transform.localPosition.z);
+        if(this.transform.localPosition.x < targetPos)
+        {
+            onTargetReached.Invoke();
+            this.enabled = false;
+        }
     }
-
 
 }
