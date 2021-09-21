@@ -10,13 +10,14 @@ public class WasteBin : MonoBehaviour
     public bool gasketIn;
     public UnityEvent onGasketIn;
     public bool allGasketsIn;
-
+    bool waited = true;
     int counter;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "gasket")
+        if (other.tag == "gasket" && waited)
         {
+            StartCoroutine(Delay());
             this.transform.parent.GetChild(counter).gameObject.SetActive(true); //activate old gasket visual
             gasketIn = true;
             obj = other.gameObject;
@@ -38,10 +39,11 @@ public class WasteBin : MonoBehaviour
         }
     }
 
-    //IEnumerator DestroyObject()
-    //{
-        //yield return new WaitForSeconds(0.5f);
-        //obj.GetComponent<Rigidbody>().isKinematic = true;
-    //}
+    IEnumerator Delay()
+    {
+        waited = false;
+        yield return new WaitForSeconds(1f);
+        waited = true;
+    }
 
 }
