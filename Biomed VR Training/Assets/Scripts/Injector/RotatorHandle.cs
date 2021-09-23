@@ -8,6 +8,7 @@ public class RotatorHandle : MonoBehaviour
     public Transform leftHand;
     public Transform rightHand;
     public float activationDis = 0.2f;
+    public Outline outline;
 
     public bool isExpanded;
 
@@ -19,6 +20,7 @@ public class RotatorHandle : MonoBehaviour
             {
                 isExpanded = true;
                 animator.SetTrigger("expand");
+                outline.enabled = true;
                 animator.ResetTrigger("shrink");
             }
         }
@@ -28,6 +30,7 @@ public class RotatorHandle : MonoBehaviour
             {
                 isExpanded = true;
                 animator.SetTrigger("expand");
+                outline.enabled = true;
                 animator.ResetTrigger("shrink");
             }
         }
@@ -37,6 +40,7 @@ public class RotatorHandle : MonoBehaviour
             {
                 isExpanded = false;
                 animator.ResetTrigger("expand");
+                outline.enabled = false;
                 animator.SetTrigger("shrink");
             }
         }
@@ -46,6 +50,7 @@ public class RotatorHandle : MonoBehaviour
             {
                 isExpanded = false;
                 animator.ResetTrigger("expand");
+                outline.enabled = false;
                 animator.SetTrigger("shrink");
             }
         }
