@@ -9,6 +9,7 @@ public class Piston : MonoBehaviour
     float initialX;
     public float targetPos;
     public UnityEvent onTargetReached;
+    int counter = 0;
 
     void Start()
     {
@@ -31,7 +32,9 @@ public class Piston : MonoBehaviour
 
     public void KnobTurned()
     {
-        StartCoroutine(MoveUp());
+        counter++;
+        if(counter <= 3)
+         StartCoroutine(MoveUp());
     }
 
     IEnumerator MoveUp()

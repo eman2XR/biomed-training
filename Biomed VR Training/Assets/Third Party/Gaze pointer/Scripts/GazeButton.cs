@@ -21,6 +21,8 @@ public class GazeButton : MonoBehaviour
     public UnityEvent onClick;
     public UnityEvent onStateChanged; //an event for when the button is pressed again (a flip switch)
 
+    public bool inspected;
+
     bool isHovered;
     float timer;
 
@@ -98,6 +100,7 @@ public class GazeButton : MonoBehaviour
     public void OnClick()
     {
         onClick.Invoke();
+        inspected = true;
         Pointer.instance.OnClickButton();
     }
 

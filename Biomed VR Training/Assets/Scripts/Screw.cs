@@ -17,11 +17,14 @@ public class Screw : MonoBehaviour
 
     public bool useZAxis;
     public bool useMinusYAxis;
+    
+    GameObject screwdriverPivot;
 
     private void Start()
     {
         collider = this.GetComponent<Collider>();
         audio = this.GetComponent<AudioSource>();
+        screwdriverPivot = transform.GetChild(0).gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +61,7 @@ public class Screw : MonoBehaviour
             onDown.Invoke();
             collider.enabled = true;
             collider.isTrigger = false;
+            screwdriverPivot.SetActive(false);
         }
         else
         {
@@ -89,5 +93,17 @@ public class Screw : MonoBehaviour
             collider.enabled = true;
             collider.isTrigger = false;
         }
+    }
+
+    public void ActivateScrew()
+    {
+        collider.enabled = true;
+        screwdriverPivot.SetActive(true);
+    }
+
+    public void DeactivateScrew()
+    {
+        collider.enabled = false;
+        screwdriverPivot.SetActive(false);
     }
 }

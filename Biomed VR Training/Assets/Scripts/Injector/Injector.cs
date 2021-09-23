@@ -25,8 +25,16 @@ public class Injector : MonoBehaviour
     public bool pistonHeadsReinstalled;
     public bool pistonRubberSleevesDown;
     public bool pistonHeadsGreasedAgain;
+    public bool pistonRubberSleevesUp;
+    public bool opticalCable1Unplugged;
+    public bool opticalCable2Unplugged;
+    public bool board1ScrewsRemoved;
+    public bool board2ScrewsRemoved;
 
     public Transform backPanel;
+    public Transform newGasket;
+    public Transform oldGasket;
+    public bool newGasketIn;
 
     int counter;
     int counter1;
@@ -38,6 +46,9 @@ public class Injector : MonoBehaviour
     int counter7;
     int counter8;
     int counter9;
+    int counter10;
+    int counter11;
+    int counter12;
 
     OVRGrabbable grabbable;
 
@@ -48,11 +59,11 @@ public class Injector : MonoBehaviour
 
     void Update()
     {
-        if(!isInverted)
+        if (!isInverted)
         {
             if (this.transform.localEulerAngles.z >= 170)
             {
-                if(grabbable.grabbingHand)
+                if (grabbable.grabbingHand)
                     grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
                 isInverted = true;
             }
@@ -136,7 +147,7 @@ public class Injector : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (connector == "1")
             connector1Removed = true;
-        else if(connector == "2")
+        else if (connector == "2")
             connector2Removed = true;
         else if (connector == "3")
             connector3Removed = true;
@@ -221,6 +232,77 @@ public class Injector : MonoBehaviour
         counter9++;
         if (counter9 == 2)
             pistonRubberSleevesDown = true;
+    }
+
+    //triggered by the piston heads rubber sleeve animation
+    public void PistonRubberSleeveUp()
+    {
+        counter10++;
+        if (counter10 == 2)
+            pistonRubberSleevesUp = true;
+    }
+
+    public void OpticalConnector1Grabbed(OVRGrabbable grabbable)
+    {
+        StartCoroutine(OpticalConectorGrabbedDelay(grabbable, "1"));
+    }
+
+    IEnumerator OpticalConectorGrabbedDelay(OVRGrabbable grabbable, string connector)
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (connector == "1")
+            opticalCable1Unplugged = true;
+        else if (connector == "2")
+            opticalCable2Unplugged = true;
+
+        //force release the object
+        if (grabbable.grabbingHand)
+            grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+
+        //disable collider and physics
+        grabbable.GetComponent<Outline>().enabled = false;
+
+        grabbable.transform.parent = this.transform;
+    }
+
+    public void PlaceNewGasket()
+    {
+        //force release the object
+        OVRGrabbable grabbable = newGasket.GetComponent<OVRGrabbable>();
+        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+
+        //disable collider and physics
+        newGasket.GetComponent<Collider>().enabled = false;
+        grabbable.GetComponent<Rigidbody>().isKinematic = true;
+        grabbable.GetComponent<Outline>().enabled = false;
+
+        //snap to position
+        grabbable.transform.position = oldGasket.transform.position;
+        grabbable.transform.rotation = oldGasket.transform.rotation;
+
+        grabbable.transform.parent = this.transform;
+
+        //audio
+        this.GetComponent<AudioSource>().Play();
+
+        newGasketIn = true;
+    }
+
+
+    //triggered when screws are placed in the snap positions
+    public void Board1ScrewRemoved()
+    {
+        counter11++;
+        if (counter11 == 3)
+            board1ScrewsRemoved = true;
+    }
+
+    //triggered when screws are placed in the snap positions
+    public void Board2ScrewRemoved()
+    {
+        counter12++;
+        if (counter12 == 3)
+            board2ScrewsRemoved = true;
     }
 
 }

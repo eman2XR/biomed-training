@@ -7,7 +7,7 @@ public class I_Objective : MonoBehaviour {
 
     #region Variables
     public string objectiveType;
-    //VRTK_InteractableObject io;
+    OVRGrabbable grabbable;
     I_Step stepScript;
     string str;
 
@@ -24,11 +24,11 @@ public class I_Objective : MonoBehaviour {
 
     private void Awake()
     {
-        ////get refferences
-        //if (GetComponent<VRTK_InteractableObject>())
-        //    io = GetComponent < VRTK_InteractableObject>();
-        //else if (GetComponentInParent<VRTK_InteractableObject>())
-        //    io = GetComponentInParent<VRTK_InteractableObject>();
+        //get refferences
+        if (GetComponent<OVRGrabbable>())
+            grabbable = GetComponent<OVRGrabbable>();
+        else if (GetComponentInParent<OVRGrabbable>())
+            grabbable = GetComponentInParent<OVRGrabbable>();
     }
 
     public void Start()
@@ -39,23 +39,19 @@ public class I_Objective : MonoBehaviour {
     {
         stepScript = stepScriptI;
         objectiveType = objectiveTypeI;
-      
-        //if (objectiveType == "use")
-        //{
-        //    io.InteractableObjectUsed += DoUsed;
-        //}
-        //else if (objectiveType == "grab")
-        //{
-        //    io.InteractableObjectGrabbed += DoGrabbed;
-        //}
-        //else if (objectiveType == "touch")
-        //{
-        //    if (io == null)
-        //    {
-        //        io = this.GetComponent<VRTK_InteractableObject>();
-        //    }
-        //       io.InteractableObjectTouched += DoTouched;
-        //}
+        
+        if (objectiveType == "grab")
+        {
+            grabbable.onGrabStart.AddListener(DoGrabbed);
+        }
+        else if (objectiveType == "touch")
+        {
+            if (grabbable == null)
+            {
+                grabbable = this.GetComponent<OVRGrabbable>();
+            }
+            grabbable.onTouchStart.AddListener(DoTouched);
+        }
     }
 
     public void SetupCustomObjective(I_Step stepScriptI, Component customObjectiveI, string customObjectiveVarI, bool customObjectiveVarValBoolI, int customObjectiveVarValIntI)
@@ -128,16 +124,16 @@ public class I_Objective : MonoBehaviour {
     //    Destroy(this);
     //}
 
-    //void DoGrabbed(object sender, InteractableObjectEventArgs e)
-    //{
-    //    ObjectiveCompleted();
-    //    Destroy(this);
-    //}
+    void DoGrabbed()
+    {
+        ObjectiveCompleted();
+        Destroy(this);
+    }
 
-    //void DoTouched(object sender, InteractableObjectEventArgs e)
-    //{
-    //    ObjectiveCompleted();
-    //}
+    void DoTouched()
+    {
+        ObjectiveCompleted();
+    }
 
     //private void OnDisable()
     //{
