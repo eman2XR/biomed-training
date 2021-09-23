@@ -16,6 +16,7 @@ TagManager:
   - button
   - grease
   - rubber boot
+  - finalGasket
   layers:
   - Default
   - TransparentFX

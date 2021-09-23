@@ -247,6 +247,12 @@ public class Injector : MonoBehaviour
         StartCoroutine(OpticalConectorGrabbedDelay(grabbable, "1"));
     }
 
+
+    public void OpticalConnector2Grabbed(OVRGrabbable grabbable)
+    {
+        StartCoroutine(OpticalConectorGrabbedDelay(grabbable, "2"));
+    }
+
     IEnumerator OpticalConectorGrabbedDelay(OVRGrabbable grabbable, string connector)
     {
         yield return new WaitForSeconds(0.5f);

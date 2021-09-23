@@ -36,8 +36,6 @@ public class WasteBin : MonoBehaviour
             if (counter == 4)
                 allGasketsIn = true;
 
-            if (counter == 5)
-                finalGasketIn = true;
             //Destroy(other.GetComponent<Follow>());
             //Destroy(other.GetComponent<Follow>());
             //other.GetComponent<Rigidbody>().isKinematic = false;
@@ -45,6 +43,23 @@ public class WasteBin : MonoBehaviour
             //other.transform.position = this.transform.position;
             //other.GetComponent<Collider>().isTrigger = false;
             //Destroy(other.transform.parent.gameObject);
+        }
+
+        else if (other.tag == "finalGasket" && waited)
+        {
+            if (gasketsIn.Contains(other.transform.parent.gameObject))
+                return; //prevent the same gasket from triggering
+
+            gasketsIn.Add(other.transform.parent.gameObject);
+            //StartCoroutine(Delay());
+            this.transform.parent.GetChild(counter).gameObject.SetActive(true); //activate old gasket visual
+            gasketIn = true;
+            obj = other.gameObject;
+            obj.transform.parent.GetComponent<Gasket>().DropGasket();
+            audio.Play();
+            onGasketIn.Invoke();
+
+            finalGasketIn = true;
         }
     }
 
