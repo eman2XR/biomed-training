@@ -322,7 +322,7 @@ public class SwivelObject : MonoBehaviour
                             //hand.GetComponent<OVRGrabber>().ForceRelease(GetComponent<OVRGrabbable>());
                             if (freezeOnMin)
                             {
-                                Freeze(hand.transform);
+                                //Freeze(hand.transform);
                             }
                         }
                         else if (angleTmp == maxAngle)
@@ -334,7 +334,7 @@ public class SwivelObject : MonoBehaviour
                             //hand.GetComponent<OVRGrabber>().ForceRelease(GetComponent<OVRGrabbable>());
                             if (freezeOnMax)
                             {
-                                Freeze(hand.transform);
+                                //Freeze(hand.transform);
                             }
                         }
                         else
@@ -393,22 +393,22 @@ public class SwivelObject : MonoBehaviour
         return toTransformProjected;
     }
 
-    //-------------------------------------------------
-    private void Freeze(Transform hand)
-    {
-        frozen = true;
-        frozenAngle = outAngle;
-        frozenHandWorldPos = hand.position;
-        frozenSqDistanceMinMaxThreshold.x = frozenDistanceMinMaxThreshold.x * frozenDistanceMinMaxThreshold.x;
-        frozenSqDistanceMinMaxThreshold.y = frozenDistanceMinMaxThreshold.y * frozenDistanceMinMaxThreshold.y;
-    }
+    ////-------------------------------------------------
+    //private void Freeze(Transform hand)
+    //{
+    //    frozen = true;
+    //    frozenAngle = outAngle;
+    //    frozenHandWorldPos = hand.position;
+    //    frozenSqDistanceMinMaxThreshold.x = frozenDistanceMinMaxThreshold.x * frozenDistanceMinMaxThreshold.x;
+    //    frozenSqDistanceMinMaxThreshold.y = frozenDistanceMinMaxThreshold.y * frozenDistanceMinMaxThreshold.y;
+    //}
 
-    //-------------------------------------------------
-    private void UnFreeze()
-    {
-        frozen = false;
-        frozenHandWorldPos.Set(0.0f, 0.0f, 0.0f);
-    }
+    ////-------------------------------------------------
+    //private void UnFreeze()
+    //{
+    //    frozen = false;
+    //    frozenHandWorldPos.Set(0.0f, 0.0f, 0.0f);
+    //}
 
     //Vector3 grabPos;
     //public bool isGrabbed;

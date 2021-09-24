@@ -145,7 +145,10 @@ public class Knob : MonoBehaviour
         while (objectInUse)
         {
             ComputeAngle(hand.transform);
-            transform.localRotation = start * Quaternion.AngleAxis(-outAngle, localPlaneNormal);
+            if(invertValue)
+                transform.localRotation = start * Quaternion.AngleAxis(outAngle, localPlaneNormal);
+            else
+                transform.localRotation = start * Quaternion.AngleAxis(-outAngle, localPlaneNormal);
 
             //UpdateAll();
 
