@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class Piston : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Piston : MonoBehaviour
     public float targetPos;
     public UnityEvent onTargetReached;
     int counter = 0;
+    public TextMeshProUGUI text;
 
     void Start()
     {
@@ -33,6 +35,7 @@ public class Piston : MonoBehaviour
     public void KnobTurned()
     {
         counter++;
+        text.text = (3 - counter).ToString();
         if(counter <= 3)
          StartCoroutine(MoveUp());
     }
