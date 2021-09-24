@@ -22,10 +22,10 @@ public class HandSwingTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("p"))
-        {
+        //if (Input.GetKeyDown("p"))
+        //{
             //Unparent();
-        }
+        //}
         if (followRotation)
         {
             if (isLeft)

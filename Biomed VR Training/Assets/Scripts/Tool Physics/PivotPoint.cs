@@ -16,9 +16,16 @@ public class PivotPoint : MonoBehaviour
     bool isBusy;
     public bool leftHandOnly;
 
+    Screw screw;
+
+    Vector3 initialHandRotation;
+    Vector3 initialPivotRotation;
+    float initialHandZ;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        screw = this.GetComponentInParent<Screw>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,7 +41,10 @@ public class PivotPoint : MonoBehaviour
                 {
                     handSwing = other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand.GetComponent<HandSwingTest>();
                     hand = handSwing.transform.parent;
-                    
+
+                    initialHandRotation = hand.localEulerAngles;
+                    initialHandZ = hand.localEulerAngles.z;
+
                     if (hand.name.Contains("Left"))
                         ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.LTouch, 0.1f);
                     else 
@@ -65,9 +75,20 @@ public class PivotPoint : MonoBehaviour
     {
         if (move)
             this.transform.LookAt(hand);
-        //rb.MovePosition(hand.position);
-        //
-        //
+        
+        if(isBusy && Vector3.Distance(hand.position, this.transform.position) > 0.25f)
+            Detach();
+
+        //if(isBusy)
+            //handSwing.transform.GetChild(0).localEulerAngles = new Vector3(-hand.localEulerAngles.z, handSwing.transform.GetChild(0).localEulerAngles.y, /handSwing.transform.GetChild(0).localEulerAngles.z);
+    }
+
+    public void Detach()
+    {
+        handSwing.ParentBack();
+        move = false;
+        isBusy = false;
+        print("unhook");
     }
 
     IEnumerator Attach()
@@ -79,16 +100,36 @@ public class PivotPoint : MonoBehaviour
         else
             handSwing.IsUsingKnob(this.transform, targetPosition, leftHandOnly);
         //handSwing.transform.localPosition = targetPosition.localPosition;
-        yield return new WaitForSeconds(1.5f);
-        handSwing.ParentBack();
-        move = false;
-        yield return new WaitForSeconds(1f);
-        isBusy = false;
-        //this.gameObject.SetActive(false);
+
+        while (isBusy)
+        {
+            if (Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles) > 60f)
+            {
+                screw.ScrewdriverTurned();
+               
+                if (hand.name.Contains("Left"))
+                    ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.LTouch, 0.1f);
+                else
+                    ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.RTouch, 0.1f);
+                
+                //print("turn screw");
+                yield break;
+            }
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(5f);
+        //handSwing.ParentBack();
+        //move = false;
+        //yield return new WaitForSeconds(1f);
+        //isBusy = false;
+        ////this.gameObject.SetActive(false);
     }
 
     private void LateUpdate()
     {
-        //this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.y)
+        //add a twist rotation from the wrist
+        if (isBusy)
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - ((hand.localEulerAngles.z - initialHandZ)/4));
     }
 }

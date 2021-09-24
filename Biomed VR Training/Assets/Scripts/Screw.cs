@@ -30,15 +30,18 @@ public class Screw : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "phillipsScrewdriver")
-        {
             if (!hasBeenUsed)
-            {
                 onTouch.Invoke();
-                StartCoroutine(EngageScrew());
-                audio.Play();
-                collider.enabled = false;
-                hasBeenUsed = true;
-            }
+    }
+
+    public void ScrewdriverTurned()
+    {
+        if (!hasBeenUsed)
+        {
+            StartCoroutine(EngageScrew());
+            audio.Play();
+            collider.enabled = false;
+            hasBeenUsed = true;
         }
     }
 
@@ -61,6 +64,7 @@ public class Screw : MonoBehaviour
             onDown.Invoke();
             collider.enabled = true;
             collider.isTrigger = false;
+            screwdriverPivot.GetComponent<PivotPoint>().Detach();
             screwdriverPivot.SetActive(false);
         }
         else
@@ -92,6 +96,8 @@ public class Screw : MonoBehaviour
             onUp.Invoke();
             collider.enabled = true;
             collider.isTrigger = false;
+            screwdriverPivot.GetComponent<PivotPoint>().Detach();
+            screwdriverPivot.SetActive(false);
         }
     }
 

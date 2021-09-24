@@ -299,7 +299,7 @@ public class Injector : MonoBehaviour
     public void Board1ScrewRemoved()
     {
         counter11++;
-        if (counter11 == 3)
+        if (counter11 == 2)
             board1ScrewsRemoved = true;
     }
 
@@ -307,7 +307,7 @@ public class Injector : MonoBehaviour
     public void Board2ScrewRemoved()
     {
         counter12++;
-        if (counter12 == 3)
+        if (counter12 == 2)
             board2ScrewsRemoved = true;
     }
 
