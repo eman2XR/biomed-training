@@ -29,7 +29,7 @@ public class I_Step : MonoBehaviour {
     private void Awake()
     {
         //references
-        inductionMaster = this.GetComponentInParent<I_Master>();
+        inductionMaster = this.transform.root.GetComponent<I_Master>();
     }
 
     public void SetupStep(int stepNumberI, List<I_Master.Steps> stepsI)
