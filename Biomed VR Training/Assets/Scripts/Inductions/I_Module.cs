@@ -64,7 +64,7 @@ public class I_Module : MonoBehaviour {
         if (waited)
         {
             StartCoroutine(Delay());
-            print("starting next step");
+            //print("starting next step");
 
             //deactivate current step
             currentStep.GetComponent<I_Step>().StopStep();

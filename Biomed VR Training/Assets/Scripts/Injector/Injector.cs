@@ -61,7 +61,7 @@ public class Injector : MonoBehaviour
     {
         if (!isInverted)
         {
-            if (this.transform.localEulerAngles.z >= 170)
+            if (this.transform.localEulerAngles.z >= 165 && this.transform.localEulerAngles.z <= 185)
             {
                 if (grabbable.grabbingHand)
                     grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
@@ -144,7 +144,7 @@ public class Injector : MonoBehaviour
 
     IEnumerator CoonectorGrabbedDelay(OVRGrabbable grabbable, string connector)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (connector == "1")
             connector1Removed = true;
         else if (connector == "2")
@@ -156,11 +156,8 @@ public class Injector : MonoBehaviour
         if (grabbable.grabbingHand)
             grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
-        //disable collider and physics
-        grabbable.GetComponent<Rigidbody>().isKinematic = true;
-        grabbable.GetComponent<Outline>().enabled = false;
         grabbable.GetComponent<Collider>().enabled = false;
-
+        grabbable.GetComponent<Connector>().enabled = false;
         grabbable.transform.parent = backPanel;
     }
 
@@ -255,7 +252,7 @@ public class Injector : MonoBehaviour
 
     IEnumerator OpticalConectorGrabbedDelay(OVRGrabbable grabbable, string connector)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (connector == "1")
             opticalCable1Unplugged = true;
         else if (connector == "2")
@@ -265,9 +262,8 @@ public class Injector : MonoBehaviour
         if (grabbable.grabbingHand)
             grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
-        //disable collider and physics
-        grabbable.GetComponent<Outline>().enabled = false;
-
+        grabbable.GetComponent<Collider>().enabled = false;
+        grabbable.GetComponent<Connector>().enabled = false;
         grabbable.transform.parent = this.transform;
     }
 

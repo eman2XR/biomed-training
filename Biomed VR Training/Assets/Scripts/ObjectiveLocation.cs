@@ -38,12 +38,24 @@ public class ObjectiveLocation : MonoBehaviour
         {
             completed = true;
             onTriggerEnter.Invoke();
+            StartCoroutine(CheckIfObjectiveCompleted());
             if (linkedObjective.completed == true)
             {
                 StartCoroutine(ObjectiveCompleted());
                 //print("COMPLETED");
             }
         }
+    }
+
+    IEnumerator CheckIfObjectiveCompleted()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (linkedObjective.completed == true)
+        {
+            StartCoroutine(ObjectiveCompleted());
+            yield break;
+        }
+        StartCoroutine(CheckIfObjectiveCompleted());
     }
 
     IEnumerator ObjectiveCompleted()

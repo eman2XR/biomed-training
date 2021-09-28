@@ -94,7 +94,7 @@ public class I_Step : MonoBehaviour {
 
     public void StartStep()
     {
-        print("starting step");
+        //print("starting step");
 
         //inductionMaster.currentStep = inductionMaster.currentStep + 1;
 

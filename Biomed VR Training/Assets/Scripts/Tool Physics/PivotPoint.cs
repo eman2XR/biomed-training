@@ -11,6 +11,7 @@ public class PivotPoint : MonoBehaviour
     
     public bool move;
     public bool isScrew;
+    bool isTurning;
 
     public Transform targetPosition;
     bool isBusy;
@@ -21,6 +22,12 @@ public class PivotPoint : MonoBehaviour
     Vector3 initialHandRotation;
     Vector3 initialPivotRotation;
     float initialHandZ;
+
+    //haptics 
+    int currentToothIndex;
+    int previousToothIndex;
+    public int teethCount = 80;
+    public int value;
 
     private void Start()
     {
@@ -88,7 +95,7 @@ public class PivotPoint : MonoBehaviour
         handSwing.ParentBack();
         move = false;
         isBusy = false;
-        print("unhook");
+        //print("unhook");
     }
 
     IEnumerator Attach()
@@ -105,15 +112,27 @@ public class PivotPoint : MonoBehaviour
         {
             if (Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles) > 60f)
             {
-                screw.ScrewdriverTurned();
-               
-                if (hand.name.Contains("Left"))
-                    ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.LTouch, 0.1f);
-                else
-                    ControllerHaptics.instance.CreateVibrateTime(5, 5, 15, OVRInput.Controller.RTouch, 0.1f);
+                if (isScrew && !isTurning)
+                { screw.ScrewdriverTurned(); isTurning = true; }
+
+                //-------haptics----------------------------------------------------------
+                value = (int)Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles);
+
+                currentToothIndex = Mathf.RoundToInt(value * teethCount - 0.5f);
+
+                if (currentToothIndex != previousToothIndex)
+                {
+                    // starts vibration on the right Touch controller
+                    if (hand.name.Contains("Left"))
+                        ControllerHaptics.instance.CreateVibrateTime(2, 2, 3, OVRInput.Controller.LTouch, 0.15f);
+                    else
+                        ControllerHaptics.instance.CreateVibrateTime(2, 2, 3, OVRInput.Controller.RTouch, 0.15f);
+                    previousToothIndex = currentToothIndex;
+                }
+                //----------------------------------------------------------------------------
                 
                 //print("turn screw");
-                yield break;
+                //yield break;
             }
             yield return null;
         }
