@@ -224,7 +224,11 @@ public class I_Master : MonoBehaviour {
 
         //check if we want to skip to the first step in the induction
         if (otherSettings.skipToStart) { StartInduction(); StartModule(false); };
-       
+
+        //string text = "";
+        //foreach(Steps step in steps)
+        //    text += "\n" + "\n" + step.stepName + "\n" + step.text;
+        //print(text);
     }
 
     public void StartInduction()

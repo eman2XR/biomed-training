@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
+    public AudioSource soundFx;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<SnapToOrigin>())
@@ -18,5 +20,6 @@ public class Floor : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         obj.SnapToOriginalLocation();
+        soundFx.Play();
     }
 }

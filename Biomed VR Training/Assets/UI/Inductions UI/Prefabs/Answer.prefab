@@ -138,8 +138,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 13.95, y: 0.1, z: 2.36}
-  m_Center: {x: -3.58, y: -0.00000011920929, z: 0}
+  m_Size: {x: 5.44, y: 0.1, z: 2.36}
+  m_Center: {x: 0, y: -0.00000011920929, z: 0}
 --- !u!1 &1049566314710628929
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.09308654, y: 0.5466813, z: 0, w: 0.35317087}
+  m_margin: {x: 0.09308654, y: 0.5466813, z: -0.08416748, w: 0.35317087}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
