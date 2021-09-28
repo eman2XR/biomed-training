@@ -17,7 +17,9 @@ public class Screw : MonoBehaviour
 
     public bool useZAxis;
     public bool useMinusYAxis;
-    
+
+    public int curRotations;
+
     GameObject screwdriverPivot;
 
     private void Start()
@@ -41,64 +43,50 @@ public class Screw : MonoBehaviour
             StartCoroutine(EngageScrew());
             audio.Play();
             collider.enabled = false;
-            hasBeenUsed = true;
         }
     }
 
     IEnumerator EngageScrew()
     {
-        if (isEngaged)
+        float elapsedTime = 0;
+        float duration = 1.5f;
+        //curRotations++;
+        
+        while (elapsedTime < duration)
         {
-            float elapsedTime = 0;
-            float duration = 2f;
-            while (elapsedTime < duration)
+            if (useZAxis)
             {
-                this.transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, 180), Time.deltaTime * movingSpeed);
-                this.transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, -range, 0), Time.deltaTime * movingSpeed);
-                elapsedTime += Time.deltaTime;
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, 0, range), Time.deltaTime * movingSpeed);
+            }
+            else if (useMinusYAxis)
+            {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
+            }
+            else 
+            {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
+            }
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
-                yield return null;
-            }
-            isEngaged = false;
-            yield return new WaitForSeconds(0.5f);
-            onDown.Invoke();
-            collider.enabled = true;
-            collider.isTrigger = false;
-            screwdriverPivot.GetComponent<PivotPoint>().Detach();
-            screwdriverPivot.SetActive(false);
-        }
-        else
-        {
-            float elapsedTime = 0;
-            float duration = 2f;
-            while (elapsedTime < duration)
-            {
-                if (useZAxis)
-                {
-                    transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, 0, range), Time.deltaTime * movingSpeed);
-                }
-                else if (useMinusYAxis)
-                {
-                    transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
-                }
-                else 
-                {
-                    transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -180), Time.deltaTime * 2);
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, range, 0), Time.deltaTime * movingSpeed);
-                }
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            isEngaged = true;
-            yield return new WaitForSeconds(0.5f);
-            onUp.Invoke();
-            collider.enabled = true;
-            collider.isTrigger = false;
-            screwdriverPivot.GetComponent<PivotPoint>().Detach();
-            screwdriverPivot.SetActive(false);
-        }
+        audio.Stop();
+        screwdriverPivot.GetComponent<PivotPoint>().isTurning = false;
+
+        //if (curRotations >= 3)
+        //{
+        isEngaged = true;
+        //yield return new WaitForSeconds(0.25f);
+        onUp.Invoke();
+        collider.enabled = true;
+        collider.isTrigger = false;
+        screwdriverPivot.GetComponent<PivotPoint>().Detach();
+        screwdriverPivot.SetActive(false);
+        hasBeenUsed = true;
+        //}
     }
 
     public void ActivateScrew()

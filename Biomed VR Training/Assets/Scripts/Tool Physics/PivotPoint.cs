@@ -11,7 +11,7 @@ public class PivotPoint : MonoBehaviour
     
     public bool move;
     public bool isScrew;
-    bool isTurning;
+    public bool isTurning;
 
     public Transform targetPosition;
     bool isBusy;
@@ -110,11 +110,10 @@ public class PivotPoint : MonoBehaviour
 
         while (isBusy)
         {
-            if (Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles) > 60f)
-            {
-                if (isScrew && !isTurning)
-                { screw.ScrewdriverTurned(); isTurning = true; }
+            //print("screwdriver is in");
 
+            if (Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles) > 60f)
+            {             
                 //-------haptics----------------------------------------------------------
                 value = (int)Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles);
 
@@ -122,7 +121,6 @@ public class PivotPoint : MonoBehaviour
 
                 if (currentToothIndex != previousToothIndex)
                 {
-                    // starts vibration on the right Touch controller
                     if (hand.name.Contains("Left"))
                         ControllerHaptics.instance.CreateVibrateTime(2, 2, 3, OVRInput.Controller.LTouch, 0.15f);
                     else
@@ -130,7 +128,14 @@ public class PivotPoint : MonoBehaviour
                     previousToothIndex = currentToothIndex;
                 }
                 //----------------------------------------------------------------------------
-                
+
+                if (isScrew && !isTurning)
+                {
+                    screw.ScrewdriverTurned();
+                    isTurning = true;
+                    //initialHandRotation = hand.localRotation.eulerAngles;
+                }
+
                 //print("turn screw");
                 //yield break;
             }
@@ -149,6 +154,6 @@ public class PivotPoint : MonoBehaviour
     {
         //add a twist rotation from the wrist
         if (isBusy)
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - ((hand.localEulerAngles.z - initialHandZ)/4));
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - ((hand.localEulerAngles.z - initialHandZ)/1));
     }
 }
