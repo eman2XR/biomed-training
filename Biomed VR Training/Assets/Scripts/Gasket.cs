@@ -19,6 +19,7 @@ public class Gasket : MonoBehaviour
 
     public void GasketHooked()
     {
+        this.GetComponent<AudioSource>().Play();
         guide.SetActive(false);
         if(!frontPanelgasket)
             staticGasket.SetActive(false);

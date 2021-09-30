@@ -6,7 +6,8 @@ public class Injector : MonoBehaviour
 {
     //used by Induction master to track if step completed
     public bool isInverted;
-    public bool is45Back;
+    public bool isHorizontal;
+    public GameObject horizontalDirections;
     public bool is45Foward;
     public bool isUninverted;
 
@@ -69,15 +70,16 @@ public class Injector : MonoBehaviour
             }
         }
 
-        //if (isInverted && !is45Back)
-        //{
-        //    if (this.transform.localEulerAngles.z <= 125)
-        //    {
-        //        this.GetComponent<Collider>().enabled = false;
-        //        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
-        //        is45Back = true;
-        //    }
-        //}
+        if (isInverted && !isHorizontal)
+        {
+            if (this.transform.localEulerAngles.z >= -85 && this.transform.localEulerAngles.z <= -95)
+            {
+                this.GetComponent<Collider>().enabled = false;
+                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                horizontalDirections.SetActive(false);
+                isHorizontal = true;
+            }
+        }
 
         //if (isInverted && is45Back && !is45Foward)
         //{

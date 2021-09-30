@@ -27,9 +27,6 @@ public class Piston : MonoBehaviour
             onTargetReached.Invoke();
             this.enabled = false;
         }
-
-        if (Input.GetKeyDown("b"))
-            KnobTurned();
     }
 
     public void KnobTurned()
@@ -44,6 +41,7 @@ public class Piston : MonoBehaviour
     {
         float duration = 1f;
         float elapsedTime = 0;
+        this.GetComponent<AudioSource>().Play();
 
         while (elapsedTime < duration)
         {

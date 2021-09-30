@@ -26,8 +26,7 @@ public class SwivelObject : MonoBehaviour
 
     private int previousToothIndex = -1;
 
-    SphereCollider colliderGrabbed;
-
+    public AudioSource audio;
 
     //----------------------------------------------
     [HeaderAttribute("From Valve")]
@@ -159,6 +158,10 @@ public class SwivelObject : MonoBehaviour
                 previousToothIndex = currentToothIndex;
             }
             //----------------------------------------------------------------------------
+
+            if (!audio.isPlaying)
+                audio.Play();
+
             yield return null;
         }
         yield return null;
@@ -179,8 +182,9 @@ public class SwivelObject : MonoBehaviour
         //return collider to original size
         //SphereCollider[] colliders = gameObject.GetComponentsInChildren<SphereCollider>();
         //foreach (SphereCollider collider in colliders)
-            //collider.radius = collider.radius / 10;
+        //collider.radius = collider.radius / 10;
 
+        audio.Stop();
     }
 
     IEnumerator SpringBackToPosition()
