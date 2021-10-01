@@ -45,6 +45,9 @@ public class I_Step : MonoBehaviour {
         steps = stepsI;
 
         //assing each text from the inspector onto that Step opbject script text
+        transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = steps[stepNumber].stepName;
+
+        //assing each text from the inspector onto that Step opbject script text
         GetComponentInChildren<TextMeshProUGUI>().text = steps[stepNumber].text;
 
         //check if text needs to be reduced

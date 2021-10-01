@@ -22,6 +22,8 @@ public class GazeButton : MonoBehaviour
     public UnityEvent onClick;
     public UnityEvent onStateChanged; //an event for when the button is pressed again (a flip switch)
 
+    public bool isInspectionButton;
+    public bool inspected;
     bool isHovered;
     float timer;
 
@@ -71,7 +73,9 @@ public class GazeButton : MonoBehaviour
         onHoverExit.Invoke();
 
         isHovered = false;
-        timer = 0;
+
+        if(!isInspectionButton)
+            timer = 0;
 
         if (axis == "x")
             this.transform.localPosition -= new Vector3(movementDistancee, 0, 0);
@@ -92,7 +96,7 @@ public class GazeButton : MonoBehaviour
             loader.transform.localScale = new Vector3(0, 1, 1);
 
         //scale down the circle loading bar
-        if (circleLoader)
+        if (circleLoader && !isInspectionButton)
             circleLoader.transform.localScale = new Vector3(0, 0, 0);
     }
 
@@ -110,7 +114,8 @@ public class GazeButton : MonoBehaviour
 
     IEnumerator CheckGazeTime()
     {
-        timer = 0;
+        if(!isInspectionButton)
+            timer = 0;
         while (isHovered)
         {
             timer += Time.deltaTime;
@@ -127,6 +132,7 @@ public class GazeButton : MonoBehaviour
             if (timer > clickTime)
             {
                 OnClick();
+                inspected = true;
                 yield break;
             }
             yield return null;

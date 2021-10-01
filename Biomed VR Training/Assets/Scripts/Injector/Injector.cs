@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Injector : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class Injector : MonoBehaviour
     public bool isUninverted;
 
     public bool backScrewsRemoved;
+    public bool lensCapLoosened;
     public bool strainReliefLoosened;
     public bool backPanelOpened;
     public bool connector3Removed;
     public bool connector1Removed;
     public bool connector2Removed;
+    public bool connector1and2Removed;
     public bool frontScrewRemoved;
     public bool visualInspectionComplete;
     public bool knobsBackIn;
@@ -50,8 +53,11 @@ public class Injector : MonoBehaviour
     int counter10;
     int counter11;
     int counter12;
+    int counter13;
 
     OVRGrabbable grabbable;
+
+    public UnityEvent onKnobsBackIn;
 
     private void Start()
     {
@@ -72,7 +78,7 @@ public class Injector : MonoBehaviour
 
         if (isInverted && !isHorizontal)
         {
-            if (this.transform.localEulerAngles.z >= -85 && this.transform.localEulerAngles.z <= -95)
+            if (Mathf.Abs(this.transform.localEulerAngles.z) >= 85 && Mathf.Abs(this.transform.localEulerAngles.z) <= 95)
             {
                 this.GetComponent<Collider>().enabled = false;
                 grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
@@ -101,6 +107,14 @@ public class Injector : MonoBehaviour
         //    }
         //}
 
+    }
+
+    //triggered when screws are placed in the snap positions
+    public void LensCapScrewRemoved()
+    {
+        counter13++;
+        if (counter13 == 2)
+            lensCapLoosened = true;
     }
 
     //triggered when screws are placed in the snap positions
@@ -148,9 +162,17 @@ public class Injector : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         if (connector == "1")
+        {
             connector1Removed = true;
+            if (connector2Removed)
+                connector1and2Removed = true;
+        }
         else if (connector == "2")
+        {
             connector2Removed = true;
+            if (connector1Removed)
+                connector1and2Removed = true;
+        }
         else if (connector == "3")
             connector3Removed = true;
 
@@ -184,7 +206,7 @@ public class Injector : MonoBehaviour
     {
         counter4++;
         if (counter4 == 2)
-            knobsBackIn = true;
+            knobsBackIn = true; onKnobsBackIn.Invoke();
     }
 
     //triggered by the piston heads script
