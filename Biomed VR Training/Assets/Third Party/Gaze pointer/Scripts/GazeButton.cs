@@ -1,4 +1,5 @@
-﻿//component to make a button interactable with the gazePointer
+﻿
+//component to make a button interactable with the gazePointer
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,9 +21,6 @@ public class GazeButton : MonoBehaviour
     public UnityEvent onHoverExit;
     public UnityEvent onClick;
     public UnityEvent onStateChanged; //an event for when the button is pressed again (a flip switch)
-
-    public bool isInspectionButton;
-    public bool inspected;
 
     bool isHovered;
     float timer;
@@ -73,10 +71,7 @@ public class GazeButton : MonoBehaviour
         onHoverExit.Invoke();
 
         isHovered = false;
-
-        if (isInspectionButton) { }
-            else
-                timer = 0;
+        timer = 0;
 
         if (axis == "x")
             this.transform.localPosition -= new Vector3(movementDistancee, 0, 0);
@@ -97,16 +92,13 @@ public class GazeButton : MonoBehaviour
             loader.transform.localScale = new Vector3(0, 1, 1);
 
         //scale down the circle loading bar
-        if (isInspectionButton) { }
-            else
-                if (circleLoader)
-                    circleLoader.transform.localScale = new Vector3(0, 0, 0);
+        if (circleLoader)
+            circleLoader.transform.localScale = new Vector3(0, 0, 0);
     }
 
     public void OnClick()
     {
         onClick.Invoke();
-        inspected = true;
         Pointer.instance.OnClickButton();
     }
 
@@ -118,12 +110,7 @@ public class GazeButton : MonoBehaviour
 
     IEnumerator CheckGazeTime()
     {
-        if (isInspectionButton)
-        {
-        }
-        else
-            timer = 0;
-
+        timer = 0;
         while (isHovered)
         {
             timer += Time.deltaTime;

@@ -9,10 +9,19 @@ public class EvaluationManager : MonoBehaviour
     public int currentQuestion;
 
     public int correctAnswers;
+    public int timer;
 
     public void StartEvaluation()
     {
         questionsList.GetChild(0).gameObject.SetActive(true);
+        StartCoroutine(StartTimer());
+    }
+
+    IEnumerator StartTimer()
+    {
+        yield return new WaitForSeconds(1);
+        timer++;
+        StartCoroutine(StartTimer());
     }
 
     public void AnswerGiven(E_Answer answer)
@@ -29,6 +38,7 @@ public class EvaluationManager : MonoBehaviour
         {
             print("evaluation complete");
             endPanel.SetActive(true);
+            StopAllCoroutines();
         }
     }
 
