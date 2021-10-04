@@ -19,4 +19,9 @@ public class GameManager : MonoBehaviour
     {
 
     }
+
+    public void Restart()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN");
+    }
 }

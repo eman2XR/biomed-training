@@ -8,8 +8,13 @@ public class SnapToOrigin : MonoBehaviour
     Vector3 originalPos;
     Quaternion originalRot;
 
+    Collider collider;
+
     IEnumerator Start()
     {
+        if (this.GetComponent<OVRGrabbable>())
+            collider = this.GetComponent<OVRGrabbable>().grabPoints[0];
+
         yield return new WaitForSeconds(1);
         originalPos = this.transform.position;
         originalRot = this.transform.rotation;
@@ -27,5 +32,7 @@ public class SnapToOrigin : MonoBehaviour
             transform.position = snapPoint.position;
             transform.rotation = snapPoint.rotation;
         }
+
+        collider.enabled = true;
     }
 }

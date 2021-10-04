@@ -13,6 +13,9 @@ public class EvaluationManager : MonoBehaviour
 
     public void StartEvaluation()
     {
+        currentQuestion = 0;
+        timer = 0;
+        correctAnswers = 0;
         questionsList.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(StartTimer());
     }

@@ -16,32 +16,19 @@ public class ObjectiveLocation : MonoBehaviour
     public UnityEvent OnObjectiveCompleted;
     public UnityEvent onTriggerEnter;
 
-    void Update()
-    {
-        //if(Vector3.Distance(objective.position, transform.position) < distance)
-        //{
-            //if(Vector3.Distance(objective.eulerAngles, transform.eulerAngles) < distance*700)
-            //{
-                //completed = true;
-                //if (linkedObjective.completed == true)
-                //{
-                     //StartCoroutine(ObjectiveCompleted());
-                    //print("COMPLETED");
-                //}
-            //}
-        //}
-    }
     
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.transform == objective || other.transform.parent == objective)
         {
             completed = true;
             onTriggerEnter.Invoke();
-            StartCoroutine(CheckIfObjectiveCompleted());
-            if (linkedObjective.completed == true)
+            //StartCoroutine(CheckIfObjectiveCompleted());
+            if (linkedObjective.completed == true && !fullyCompleted)
             {
                 StartCoroutine(ObjectiveCompleted());
+                fullyCompleted = true;
+                //StartCoroutine(ObjectiveCompleted());
                 //print("COMPLETED");
             }
         }

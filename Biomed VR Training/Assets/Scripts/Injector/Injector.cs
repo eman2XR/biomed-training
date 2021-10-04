@@ -78,7 +78,7 @@ public class Injector : MonoBehaviour
 
         if (isInverted && !isHorizontal)
         {
-            if (Mathf.Abs(this.transform.localEulerAngles.z) >= 85 && Mathf.Abs(this.transform.localEulerAngles.z) <= 95)
+            if (Mathf.Abs(this.transform.localEulerAngles.z) >= 260 && Mathf.Abs(this.transform.localEulerAngles.z) <= 280)
             {
                 this.GetComponent<Collider>().enabled = false;
                 grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
@@ -86,6 +86,8 @@ public class Injector : MonoBehaviour
                 isHorizontal = true;
             }
         }
+
+        //print(this.transform.localEulerAngles.z);
 
         //if (isInverted && is45Back && !is45Foward)
         //{
@@ -206,7 +208,10 @@ public class Injector : MonoBehaviour
     {
         counter4++;
         if (counter4 == 2)
-            knobsBackIn = true; onKnobsBackIn.Invoke();
+        {
+            knobsBackIn = true; 
+            onKnobsBackIn.Invoke();
+        }
     }
 
     //triggered by the piston heads script
@@ -309,7 +314,7 @@ public class Injector : MonoBehaviour
         grabbable.transform.parent = this.transform;
 
         //audio
-        this.GetComponent<AudioSource>().Play();
+        grabbable.GetComponent<AudioSource>().Play();
 
         newGasketIn = true;
     }

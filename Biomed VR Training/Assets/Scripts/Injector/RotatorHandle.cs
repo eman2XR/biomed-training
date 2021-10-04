@@ -54,5 +54,6 @@ public class RotatorHandle : MonoBehaviour
                 animator.SetTrigger("shrink");
             }
         }
+
     }
 }
