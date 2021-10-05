@@ -22,11 +22,17 @@ public class Screw : MonoBehaviour
 
     GameObject screwdriverPivot;
 
+    public float screwValue = 0f;
+    float lastValue;
+    Vector3 initLocPos;
+    bool isTurning;
+
     private void Start()
     {
         collider = this.GetComponent<Collider>();
         audio = this.GetComponent<AudioSource>();
         screwdriverPivot = transform.GetChild(0).gameObject;
+        initLocPos = transform.localPosition;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,14 +42,58 @@ public class Screw : MonoBehaviour
                 onTouch.Invoke();
     }
 
-    public void ScrewdriverTurned()
+    private void Update()
     {
-        if (!hasBeenUsed)
+        if (isTurning && audio.isPlaying)
+            audio.Stop();
+    }
+    public void ScrewdriverTurned(float value)
+    {
+        if (lastValue != value && value < 0)
         {
-            StartCoroutine(EngageScrew());
-            audio.Play();
-            collider.enabled = false;
+            isTurning = true;
+            //transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -value*10), Time.deltaTime * 2);
+            if (useZAxis)
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, 0, (value / 750)), Time.deltaTime * movingSpeed);
+            else if (useMinusYAxis)
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, (value / 750), 0), Time.deltaTime * movingSpeed);
+            else
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, (value / 750), 0), Time.deltaTime * movingSpeed);
+
+            lastValue = value;
+            if (!audio.isPlaying)
+                audio.Play();
         }
+        else
+        {
+            isTurning = false;
+        }
+
+        if (useZAxis)
+        {
+            if (Mathf.Abs(transform.localPosition.z - initLocPos.z) > range)
+                if (!hasBeenUsed)
+                    FullyUnscrewed();
+        }
+        else
+        {
+            if (Mathf.Abs(transform.localPosition.y - initLocPos.y) > range)
+                if (!hasBeenUsed)
+                    FullyUnscrewed();
+        }
+       
+    }
+
+    void FullyUnscrewed()
+    {
+        //StartCoroutine(EngageScrew());
+        collider.enabled = false;
+        onUp.Invoke();
+        collider.enabled = true;
+        collider.isTrigger = false;
+        screwdriverPivot.GetComponent<PivotPoint>().Detach();
+        screwdriverPivot.SetActive(false);
+        hasBeenUsed = true;
     }
 
     IEnumerator EngageScrew()
@@ -76,7 +126,7 @@ public class Screw : MonoBehaviour
         audio.Stop();
         screwdriverPivot.GetComponent<PivotPoint>().isTurning = false;
 
-        //if (curRotations >= 3)
+        // (curRotations >= 3)
         //{
         isEngaged = true;
         //yield return new WaitForSeconds(0.25f);

@@ -15,9 +15,17 @@ public class HandSwingTest : MonoBehaviour
 
     Vector3 initRotation;
 
+    public Transform handVisual;
+    Transform initialParent;
+    Vector3 initialPos;
+    Quaternion initialRot;
     void Start()
     {
         initRotation = this.transform.localEulerAngles;
+
+        initialParent = handVisual.transform.parent;
+        initialRot = handVisual.localRotation;
+        initialPos = handVisual.localPosition;
     }
 
     private void Update()
@@ -90,6 +98,9 @@ public class HandSwingTest : MonoBehaviour
             transform.localEulerAngles = targetPostion.localEulerAngles;
         //transform.localEulerAngles = new Vector3(0, -115f, 8.5f);
         //allowRotation = true;
+
+        handVisual.parent = null;
+        handVisual.gameObject.SetActive(false);
     }
 
     public void ParentBack()
@@ -99,6 +110,11 @@ public class HandSwingTest : MonoBehaviour
         transform.parent = parent;
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = initRotation;
+
+        handVisual.parent = initialParent;
+        handVisual.gameObject.SetActive(true);
+        handVisual.localPosition = initialPos;
+        handVisual.localRotation = initialRot;
     }
 
 }

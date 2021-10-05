@@ -29,6 +29,11 @@ public class PivotPoint : MonoBehaviour
     public int teethCount = 80;
     public int value;
 
+    Quaternion lastToolRotation;
+
+    public ScrewDriver screwdriver;
+    float initiaZRot;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -48,6 +53,13 @@ public class PivotPoint : MonoBehaviour
                 {
                     handSwing = other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand.GetComponent<HandSwingTest>();
                     hand = handSwing.transform.parent;
+                    //hand = handSwing.pivot;
+
+                    if (isScrew)
+                    {
+                        screwdriver = other.transform.parent.GetComponent<ScrewDriver>();
+                        screwdriver.HandInPlace(hand);
+                    }
 
                     initialHandRotation = hand.localEulerAngles;
                     initialHandZ = hand.localEulerAngles.z;
@@ -100,7 +112,9 @@ public class PivotPoint : MonoBehaviour
 
     IEnumerator Attach()
     {
+        initiaZRot = this.transform.localEulerAngles.z;
         isBusy = true;
+        if(isScrew) move = false;
         yield return new WaitForSeconds(0.1f);
         if(isScrew)
             handSwing.IsUsingScrew(this.transform, targetPosition, leftHandOnly);
@@ -117,7 +131,10 @@ public class PivotPoint : MonoBehaviour
                 //-------haptics----------------------------------------------------------
                 value = (int)Vector3.Distance(initialHandRotation, hand.localRotation.eulerAngles);
 
-                currentToothIndex = Mathf.RoundToInt(value * teethCount - 0.5f);
+                if (isScrew)
+                    currentToothIndex = Mathf.RoundToInt(screwdriver.movedAngles * teethCount - 0.5f);
+                else
+                    currentToothIndex = Mathf.RoundToInt(value * teethCount - 0.5f);
 
                 if (currentToothIndex != previousToothIndex)
                 {
@@ -129,9 +146,13 @@ public class PivotPoint : MonoBehaviour
                 }
                 //----------------------------------------------------------------------------
 
+                if (isScrew)
+                {
+                    screw.ScrewdriverTurned(screwdriver.movedAngles);
+                }
+
                 if (isScrew && !isTurning)
                 {
-                    screw.ScrewdriverTurned();
                     isTurning = true;
                     //initialHandRotation = hand.localRotation.eulerAngles;
                 }
@@ -142,18 +163,39 @@ public class PivotPoint : MonoBehaviour
             yield return null;
         }
 
-        //yield return new WaitForSeconds(5f);
-        //handSwing.ParentBack();
-        //move = false;
-        //yield return new WaitForSeconds(1f);
-        //isBusy = false;
+        yield return new WaitForSeconds(5f);
+        handSwing.ParentBack();
+        move = false;
+        yield return new WaitForSeconds(1f);
+        isBusy = false;
         ////this.gameObject.SetActive(false);
     }
 
     private void LateUpdate()
     {
         //add a twist rotation from the wrist
-        if (isBusy)
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - ((hand.localEulerAngles.z - initialHandZ)/1));
+        if (isBusy & isScrew)
+        {
+            if (screwdriver.movedAngles < 1)
+            {
+                //if (initiaZRot - transform.localEulerAngles.z > 2)
+                //{
+                    Vector3 targetRot = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + ((screwdriver.movedAngles)));
+                    transform.localEulerAngles = targetRot;
+
+                    screw.ScrewdriverTurned(screwdriver.movedAngles);
+
+                //}
+            }
+            else
+            {
+                //Vector3 targetRot = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + ((10)));
+                //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, targetRot, Time.deltaTime * 10);
+            }
+
+            //Vector3 targetRot = new Vector3(screwdriver.transform.localEulerAngles.x, screwdriver.transform.localEulerAngles.y, screwdriver.transform.localEulerAngles.z - ((screwdriver.movedAngles)));
+            //screwdriver.transform.localEulerAngles = Vector3.Lerp(screwdriver.transform.localEulerAngles, targetRot, Time.deltaTime * 25);
+        }
     }
+
 }
