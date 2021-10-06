@@ -34,6 +34,8 @@ public class PivotPoint : MonoBehaviour
     public ScrewDriver screwdriver;
     float initiaZRot;
 
+    public float unhookDistance = 0.25f;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -95,7 +97,7 @@ public class PivotPoint : MonoBehaviour
         if (move)
             this.transform.LookAt(hand);
         
-        if(isBusy && Vector3.Distance(hand.position, this.transform.position) > 0.25f)
+        if(isBusy && Vector3.Distance(hand.position, this.transform.position) > unhookDistance)
             Detach();
 
         //if(isBusy)
