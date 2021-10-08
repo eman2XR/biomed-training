@@ -11,14 +11,12 @@ public class WasteBin : MonoBehaviour
     public UnityEvent onGasketIn;
     public bool allGasketsIn;
     public bool finalGasketIn;
-    bool waited = true;
     int counter;
+    List<GameObject> gasketsIn = new List<GameObject>();
 
     private void OnTriggerEnter(Collider other)
     {
-        List<GameObject> gasketsIn = new List<GameObject>();
-
-        if (other.tag == "gasket" && waited)
+        if (other.tag == "gasket")
         {
             if (gasketsIn.Contains(other.transform.parent.gameObject))
                 return; //prevent the same gasket from triggering
@@ -45,7 +43,7 @@ public class WasteBin : MonoBehaviour
             //Destroy(other.transform.parent.gameObject);
         }
 
-        else if (other.tag == "finalGasket" && waited)
+        else if (other.tag == "finalGasket")
         {
             if (gasketsIn.Contains(other.transform.parent.gameObject))
                 return; //prevent the same gasket from triggering
@@ -62,12 +60,4 @@ public class WasteBin : MonoBehaviour
             finalGasketIn = true;
         }
     }
-
-    IEnumerator Delay()
-    {
-        waited = false;
-        yield return new WaitForSeconds(1f);
-        waited = true;
-    }
-
 }

@@ -24,9 +24,13 @@ public class I_Step : MonoBehaviour {
 
     public bool isCompulsory;
     public string stepName;
+
+    //keep track of custom objective
+    public I_Objective customObjective;
+
     #endregion
 
-    private void Awake()
+    private void OnEnable()
     {
         //references
         inductionMaster = this.transform.root.GetComponent<I_Master>();
@@ -124,8 +128,9 @@ public class I_Step : MonoBehaviour {
             //increase number of objectives needed to be completed
             numberOfObjectives++;
 
-            //add custom objective component and trigger SetpOobjective function
-            steps[stepNumber].customObjective.gameObject.AddComponent<I_Objective>().SetupCustomObjective(this, steps[stepNumber].customObjective, steps[stepNumber].customObjectiveVariable, steps[stepNumber].customObjectiveVariableValueBool, steps[stepNumber].customObjectiveVariableValueInt);
+            //add custom objective component and trigger SetpObjective function
+            customObjective = steps[stepNumber].customObjective.gameObject.AddComponent<I_Objective>();
+            customObjective.SetupCustomObjective(this, steps[stepNumber].customObjective, steps[stepNumber].customObjectiveVariable, steps[stepNumber].customObjectiveVariableValueBool, steps[stepNumber].customObjectiveVariableValueInt);
             //print(this.gameObject.name + " " + steps[stepNumber].customObjectiveVariableValueInt); 
         }
 

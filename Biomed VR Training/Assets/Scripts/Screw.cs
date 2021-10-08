@@ -16,6 +16,7 @@ public class Screw : MonoBehaviour
     bool hasBeenUsed;
 
     public bool useZAxis;
+    public bool useMinusZAxis;
     public bool useMinusYAxis;
 
     public int curRotations;
@@ -47,6 +48,7 @@ public class Screw : MonoBehaviour
         if (isTurning && audio.isPlaying)
             audio.Stop();
     }
+    
     public void ScrewdriverTurned(float value)
     {
         if (lastValue != value && value < 0)
@@ -55,6 +57,8 @@ public class Screw : MonoBehaviour
             //transform.localRotation = Quaternion.Lerp(transform.localRotation, transform.localRotation * Quaternion.Euler(0, 0, -value*10), Time.deltaTime * 2);
             if (useZAxis)
                 transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + new Vector3(0, 0, (value / 750)), Time.deltaTime * movingSpeed);
+            else if (useMinusZAxis)
+                transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, 0, (value / 750)), Time.deltaTime * movingSpeed);
             else if (useMinusYAxis)
                 transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition - new Vector3(0, (value / 750), 0), Time.deltaTime * movingSpeed);
             else
@@ -69,7 +73,7 @@ public class Screw : MonoBehaviour
             isTurning = false;
         }
 
-        if (useZAxis)
+        if (useZAxis || useMinusZAxis)
         {
             if (Mathf.Abs(transform.localPosition.z - initLocPos.z) > range)
                 if (!hasBeenUsed)

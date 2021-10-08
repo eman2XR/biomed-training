@@ -8,7 +8,6 @@ public class Injector : MonoBehaviour
     //used by Induction master to track if step completed
     public bool isInverted;
     public bool isHorizontal;
-    public GameObject horizontalDirections;
     public bool is45Foward;
     public bool isUninverted;
 
@@ -34,11 +33,12 @@ public class Injector : MonoBehaviour
     public bool opticalCable2Unplugged;
     public bool board1ScrewsRemoved;
     public bool board2ScrewsRemoved;
+    public bool newGasketIn;
 
     public Transform backPanel;
     public Transform newGasket;
     public Transform oldGasket;
-    public bool newGasketIn;
+    public GameObject horizontalDirections;
 
     int counter;
     int counter1;
@@ -80,8 +80,8 @@ public class Injector : MonoBehaviour
         {
             if (Mathf.Abs(this.transform.localEulerAngles.z) >= 260 && Mathf.Abs(this.transform.localEulerAngles.z) <= 280)
             {
-                this.GetComponent<Collider>().enabled = false;
-                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                if (grabbable.grabbingHand)
+                    grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
                 horizontalDirections.SetActive(false);
                 isHorizontal = true;
             }
@@ -300,7 +300,8 @@ public class Injector : MonoBehaviour
     {
         //force release the object
         OVRGrabbable grabbable = newGasket.GetComponent<OVRGrabbable>();
-        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        if(grabbable.grabbingHand)
+            grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
         //disable collider and physics
         newGasket.GetComponent<Collider>().enabled = false;

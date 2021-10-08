@@ -14,6 +14,7 @@ public class Pointer : MonoBehaviour {
 
     [SerializeField] Image crossImage;
     [SerializeField] Color onHoverColor; //color to change to when hovering a button
+    Color initialColor;
 
     bool busy;
     bool exitedButton;
@@ -35,6 +36,7 @@ public class Pointer : MonoBehaviour {
     {
         //get refferences
         initPointerPos = reticle.localPosition;
+        initialColor = crossImage.color;
     }
 
     void Update () {
@@ -43,7 +45,11 @@ public class Pointer : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.tag == "button")
+            if (hit.collider.gameObject.tag == "gazeUI" || hit.collider.gameObject.tag == "button")
+            { crossImage.color = initialColor; reticle.transform.position = hit.point; }
+            else crossImage.color = Color.clear;
+
+            if (hit.collider.gameObject.tag == "button" || hit.collider.gameObject.tag == "inspectionButton")
             {
                 if (!busy)
                 {
@@ -51,7 +57,8 @@ public class Pointer : MonoBehaviour {
                     busy = true;
                     exitedButton = false;
 
-                    crossImage.color = Color.red;
+                    if(hit.collider.gameObject.tag == "button")
+                        crossImage.color = onHoverColor;
 
                     buttonUnderGaze = hit.collider.GetComponent<GazeButton>();
                     StopAllCoroutines();
@@ -63,9 +70,10 @@ public class Pointer : MonoBehaviour {
                     //audio
                     onHoverAudioSource.Play();
                 }
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 reticle.transform.position = hit.point;
             }
+
             else
             {
                 busy = false;

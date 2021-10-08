@@ -13,15 +13,26 @@ public class Leaderboard : MonoBehaviour
 
     private void OnEnable()
     {
-        Record(nameField.text, results.score);
+        //PlayerPrefs.DeleteAll();
 
-        //Record("test", 50);
+        //record the current entry
+        Record(nameField.text, results.score, results.scoreQuestions, results.time, results.skippedSteps);
+
+        LoadScores(); //sort the entries
+
+        //list current and all previous entries
         for (int i = 0; i < Leaderboard.EntryCount; i++)
         {
             ScoreEntry entry = Leaderboard.GetEntry(i);
             GameObject user = Instantiate(leaderboardUser, usersList);
-            user.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = i+1 + ". " + entry.name;
-            print(entry.name + " " + entry.score);
+            if (entry.name != "" && entry.scoreQuestions != 0) 
+            { 
+                user.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = i + 1 + ". " + entry.name;
+                user.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = entry.scoreQuestions.ToString();
+                user.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "time: " + entry.time;
+                user.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "skipped steps: " + entry.skippedSteps.ToString();
+                print(entry.name + " " + entry.overallScore);
+            }
         }
     }
 
@@ -30,12 +41,18 @@ public class Leaderboard : MonoBehaviour
     public struct ScoreEntry
     {
         public string name;
-        public int score;
+        public float overallScore;
+        public int scoreQuestions;
+        public string time;
+        public int skippedSteps;
 
-        public ScoreEntry(string name, int score)
+        public ScoreEntry(string name, float overallScore, int scoreQuestions, string time, int skippedSteps)
         {
             this.name = name;
-            this.score = score;
+            this.overallScore = overallScore;
+            this.scoreQuestions = scoreQuestions;
+            this.time = time;
+            this.skippedSteps = skippedSteps;
         }
     }
 
@@ -58,7 +75,7 @@ public class Leaderboard : MonoBehaviour
 
     private static void SortScores()
     {
-        s_Entries.Sort((a, b) => b.score.CompareTo(a.score));
+        s_Entries.Sort((a, b) => b.overallScore.CompareTo(a.overallScore));
     }
 
     private static void LoadScores()
@@ -69,7 +86,10 @@ public class Leaderboard : MonoBehaviour
         {
             ScoreEntry entry;
             entry.name = PlayerPrefs.GetString(PlayerPrefsBaseKey + "[" + i + "].name", "");
-            entry.score = PlayerPrefs.GetInt(PlayerPrefsBaseKey + "[" + i + "].score", 0);
+            entry.overallScore = PlayerPrefs.GetFloat(PlayerPrefsBaseKey + "[" + i + "].score", 0);
+            entry.scoreQuestions = PlayerPrefs.GetInt(PlayerPrefsBaseKey + "[" + i + "].scoreQuestions", 0);
+            entry.time = PlayerPrefs.GetString(PlayerPrefsBaseKey + "[" + i + "].time", "");
+            entry.skippedSteps = PlayerPrefs.GetInt(PlayerPrefsBaseKey + "[" + i + "].skippedSteps", 0);
             s_Entries.Add(entry);
         }
 
@@ -82,7 +102,10 @@ public class Leaderboard : MonoBehaviour
         {
             var entry = s_Entries[i];
             PlayerPrefs.SetString(PlayerPrefsBaseKey + "[" + i + "].name", entry.name);
-            PlayerPrefs.SetInt(PlayerPrefsBaseKey + "[" + i + "].score", entry.score);
+            PlayerPrefs.SetFloat(PlayerPrefsBaseKey + "[" + i + "].score", entry.overallScore);
+            PlayerPrefs.SetInt(PlayerPrefsBaseKey + "[" + i + "].scoreQuestions", entry.scoreQuestions);
+            PlayerPrefs.SetString(PlayerPrefsBaseKey + "[" + i + "].time", entry.time);
+            PlayerPrefs.SetInt(PlayerPrefsBaseKey + "[" + i + "].skippedSteps", entry.skippedSteps);
         }
     }
 
@@ -91,12 +114,11 @@ public class Leaderboard : MonoBehaviour
         return Entries[index];
     }
 
-    public static void Record(string name, int score)
+    public static void Record(string name, float score, int scoreQuestions, string time, int skippedSteps)
     {
-        Entries.Add(new ScoreEntry(name, score));
+        Entries.Add(new ScoreEntry(name, score, scoreQuestions, time, skippedSteps));
         SortScores();
         Entries.RemoveAt(Entries.Count - 1);
         SaveScores();
     }
-
 }

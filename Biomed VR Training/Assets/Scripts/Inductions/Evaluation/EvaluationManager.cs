@@ -6,21 +6,22 @@ public class EvaluationManager : MonoBehaviour
 {
     public Transform questionsList;
     public GameObject endPanel;
-    public int currentQuestion;
+    int currentQuestion;
 
     public int correctAnswers;
     public int timer;
 
+    public I_Master instructionsM;
+
     public void StartEvaluation()
     {
         currentQuestion = 0;
-        timer = 0;
         correctAnswers = 0;
         questionsList.GetChild(0).gameObject.SetActive(true);
-        StartCoroutine(StartTimer());
+        //StartCoroutine(StartTimer());
     }
 
-    IEnumerator StartTimer()
+    public IEnumerator StartTimer()
     {
         yield return new WaitForSeconds(1);
         timer++;

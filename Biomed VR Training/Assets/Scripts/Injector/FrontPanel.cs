@@ -31,7 +31,8 @@ public class FrontPanel : MonoBehaviour
 
         //force release the object
         OVRGrabbable grabbable = newGasket.GetComponent<OVRGrabbable>();
-        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        if(grabbable.grabbingHand)
+            grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
         //disable collider and physics
         newGasket.GetComponent<Collider>().enabled = false;

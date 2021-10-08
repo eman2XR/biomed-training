@@ -18,6 +18,8 @@ TagManager:
   - rubber boot
   - finalGasket
   - floor
+  - gazeUI
+  - inspectionButton
   layers:
   - Default
   - TransparentFX

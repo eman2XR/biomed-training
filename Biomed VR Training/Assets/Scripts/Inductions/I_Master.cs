@@ -77,7 +77,7 @@ public class I_Master : MonoBehaviour {
 
         public List<GameObject> objectsToHighlight = new List<GameObject>();
         public List<GameObject> labels = new List<GameObject>();
-
+       
         public AudioClip audio;
 
         [Tooltip("tick this if you want the right hand to receive a notification and pointer to the target")]
@@ -87,6 +87,12 @@ public class I_Master : MonoBehaviour {
 
         public int eventDelay = 0;
         public UnityEvent triggerEvent;
+
+        [Header("Skip step events")]
+        [Tooltip("any objects that should be moved on step skipped")]
+        public List<Transform> objectsToMove = new List<Transform>();
+        public List<Transform> objectsToMoveTargets = new List<Transform>();
+        public UnityEvent skipStepEvent;
     }
 
     //Steps list
@@ -119,7 +125,7 @@ public class I_Master : MonoBehaviour {
     public bool hidden;
     [Button("Start Module", "StartModule", true)]
     public bool hidden1;
-    [Button("Start Next Step", "StartNextStep", true)]
+    [Button("Skip Step", "SkipStep", true)]
     public bool hidden2;
     [Button("Start Previous Step", "StartPreviousStep", true)]
     public bool hidden3;
@@ -168,6 +174,9 @@ public class I_Master : MonoBehaviour {
         public bool reduceTextSize;
 
         public bool skipToStart;//to skip to the first step in the induction
+
+        public E_Results results;
+        public EvaluationManager evManager;
 
     }
     [Background(ColorEnum.Grey)]
@@ -239,6 +248,8 @@ public class I_Master : MonoBehaviour {
         //deactivate intro panel
         introPanel.SetActive(false);
 
+        StartModule(false);
+
         //deactivate the start Ui button
         startButton.SetActive(false);
 
@@ -266,8 +277,9 @@ public class I_Master : MonoBehaviour {
         }
 
         //start timer (for checking how long the induction tool to complete)
-        Coroutine timerCo;
-        timerCo = StartCoroutine(Timer());
+        //Coroutine timerCo;
+        //timerCo = StartCoroutine(Timer());
+        StartCoroutine(otherSettings.evManager.StartTimer());
 
         //deactivate modules panel title
         ExtensionMethods.GetChild("Modules Panel Title", transform).SetActive(false);
@@ -366,6 +378,91 @@ public class I_Master : MonoBehaviour {
 
         //send message to module to start next step
           module.GetComponent<I_Module>().StartNextStep();
+
+        //check for events
+        Run.After(steps[currentStep].eventDelay, () =>
+        {
+            steps[currentStep].triggerEvent.Invoke();
+        });  
+    }
+
+    public void SkipStep()
+    {
+        StopAllCoroutines();
+
+        //tell the results script a step was skipped
+        otherSettings.results.StepSkipped();
+
+        //destroy custom objective if still active
+        foreach (I_Step step in this.GetComponentsInChildren<I_Step>())
+        {
+            if (step.transform.parent.GetChild(currentStep).GetComponent<I_Step>().customObjective)
+                Destroy(step.transform.parent.GetChild(currentStep).GetComponent<I_Step>().customObjective); //destroy custom objective
+        }
+
+        //move any objects
+        foreach (Transform trans in steps[currentStep].objectsToMove)
+        {
+            if (!trans.name.Contains("INJECTOR"))
+                trans.parent = null;
+            trans.position = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].position;
+            trans.rotation = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].rotation;
+        }
+
+        steps[currentStep].skipStepEvent.Invoke();
+
+        currentStep++;
+
+        if (currentStep == steps.Count)
+        {
+            print("Induction Finished");
+            EndOfInduction();
+            return;
+        }
+
+        //check for automatic step switching
+        if (steps[currentStep].switchesAutomatically)
+        {
+            //mark objectives as completed
+            foreach (I_Step step in this.GetComponentsInChildren<I_Step>())
+            {
+                step.transform.parent.GetChild(currentStep).GetComponent<I_Step>().allAbjectivesCompleted = true;
+            }
+
+            int curStep = currentStep;
+
+            Run.After(steps[currentStep].switchDelay, () =>
+            {
+                //if it's still the same step then switch (in case the user clicked the next arrow)
+                if (curStep == currentStep)
+                {
+                    //print("switched step automat");
+                    StartNextStep();
+                }
+            });
+        }
+
+        //deactivate and activate next and back buttons to avoid pressing it twice in succession
+        nextButton.SetActive(false);
+        backButton.SetActive(false);
+        Run.After(1, () =>
+        {
+            nextButton.SetActive(true);
+            backButton.SetActive(true);
+        });
+
+        //steps counter ui
+        stepsCounterButton.GetComponent<TextMeshProUGUI>().text = currentStep + 1 + "/" + (steps.Count - 1);
+
+        //sound fx
+        otherSettings.changeStepSound.Play();
+
+        //debugs
+        if (otherSettings.printLogs)
+            print("starting next step");
+
+        //send message to module to start next step
+        module.GetComponent<I_Module>().StartNextStep();
 
         //check for events
         Run.After(steps[currentStep].eventDelay, () =>
