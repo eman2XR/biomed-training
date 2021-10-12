@@ -383,7 +383,8 @@ public class I_Master : MonoBehaviour {
         Run.After(steps[currentStep].eventDelay, () =>
         {
             steps[currentStep].triggerEvent.Invoke();
-        });  
+        });
+
     }
 
     public void SkipStep()

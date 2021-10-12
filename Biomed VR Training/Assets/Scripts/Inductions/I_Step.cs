@@ -28,6 +28,10 @@ public class I_Step : MonoBehaviour {
     //keep track of custom objective
     public I_Objective customObjective;
 
+    //wait for audio before starting next step
+    bool waitedForAudio;
+    bool stepChanged;
+
     #endregion
 
     private void OnEnable()
@@ -104,6 +108,15 @@ public class I_Step : MonoBehaviour {
         //print("starting step");
 
         //inductionMaster.currentStep = inductionMaster.currentStep + 1;
+        if ((steps[stepNumber].audio))
+        {
+            Run.After(steps[stepNumber].audio.length, () =>
+            {
+                AudioFinished();
+            });
+        }
+        else
+            waitedForAudio = true;
 
         //run everyting with a slight delay to avoid conflicts 
         Run.After(0.7f, () => { 
@@ -205,7 +218,7 @@ public class I_Step : MonoBehaviour {
         if (inductionMaster.otherSettings.printLogs)
             print(objective.gameObject.name + " objective completed in step " + gameObject.name);
 
-        if (objectivesCompleted == numberOfObjectives)
+        if (objectivesCompleted == numberOfObjectives && waitedForAudio)
         {
             allAbjectivesCompleted = true;
             inductionMaster.StartNextStep();
@@ -213,7 +226,6 @@ public class I_Step : MonoBehaviour {
             //sounds
             if (inductionMaster.otherSettings.stepCompletedSound)
                 inductionMaster.otherSettings.stepCompletedSound.Play();
-
 
             //hand notification ----------------------------------------------------------
             if (steps[stepNumber].handNotification)
@@ -223,7 +235,22 @@ public class I_Step : MonoBehaviour {
                     inductionMaster.GetComponent<HandDirectionsAndHaptics>().EndHandNotification();
                 }
             }
+            stepChanged = true;
         }
     }
 
+    void AudioFinished()
+    {
+        waitedForAudio = true;
+
+        if (objectivesCompleted == numberOfObjectives && !stepChanged)
+        {
+            allAbjectivesCompleted = true;
+            inductionMaster.StartNextStep();
+
+            //sounds
+            if (inductionMaster.otherSettings.stepCompletedSound)
+                inductionMaster.otherSettings.stepCompletedSound.Play();
+        }
+    }
 }
