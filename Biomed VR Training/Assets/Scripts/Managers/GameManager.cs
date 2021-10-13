@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject logoReveal;
+
     private void Awake()
     {
         //if (!UserProgress.loadingScreenSeen)
@@ -12,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-            //OVRManager.instance.InputFocus
+        logoReveal.SetActive(true);
     }
 
     void FocusLost()

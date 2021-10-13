@@ -20,6 +20,9 @@ public class HandSwingTest : MonoBehaviour
     Vector3 initialPos;
     Quaternion initialRot;
 
+    public Vector3 leftHandPosOffset;
+    public Vector3 leftHandRotOffset;
+
     void Start()
     {
         initRotation = this.transform.localEulerAngles;
@@ -91,8 +94,11 @@ public class HandSwingTest : MonoBehaviour
         transform.localPosition = targetPostion.localPosition;
 
         if (isLeft)
-            transform.localEulerAngles = -targetPostion.localEulerAngles;
-        //transform.localEulerAngles = new Vector3(0, 115f, -8.5f);
+        {
+            transform.localEulerAngles = (-targetPostion.localEulerAngles) + leftHandRotOffset;
+            transform.localPosition = (targetPostion.localPosition) + leftHandPosOffset;
+            //transform.localPosition = transform.localPosition + leftHandOffset;
+        }
         else
             transform.localEulerAngles = targetPostion.localEulerAngles;
         //transform.localEulerAngles = new Vector3(0, -115f, 8.5f);

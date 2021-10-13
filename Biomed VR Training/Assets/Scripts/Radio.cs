@@ -72,7 +72,7 @@ public class Radio : MonoBehaviour
     IEnumerator CheckAudio()
     {
         yield return new WaitForSeconds(1);
-        if (!audioSource.isPlaying)
+        if (!audioSource.isPlaying && audioSource.enabled)
         {
             if (currentStation == 1)
                 audioSource.clip = station1Clips[stationCurrentClip + 1];

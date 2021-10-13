@@ -28,6 +28,8 @@ public class Screw : MonoBehaviour
     Vector3 initLocPos;
     bool isTurning;
 
+    public AudioClip onUpSound;
+
     private void Start()
     {
         collider = this.GetComponent<Collider>();
@@ -45,7 +47,7 @@ public class Screw : MonoBehaviour
 
     private void Update()
     {
-        if (isTurning && audio.isPlaying)
+        if (!hasBeenUsed && isTurning && audio.isPlaying)
             audio.Stop();
     }
     
@@ -97,6 +99,8 @@ public class Screw : MonoBehaviour
         collider.isTrigger = false;
         screwdriverPivot.GetComponent<PivotPoint>().Detach();
         screwdriverPivot.SetActive(false);
+        audio.clip = onUpSound;
+        audio.Play(); 
         hasBeenUsed = true;
     }
 
