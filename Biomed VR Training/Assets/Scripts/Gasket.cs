@@ -27,6 +27,18 @@ public class Gasket : MonoBehaviour
         StartCoroutine(AdjustFollowSmooth());
     }
 
+    public void GasketGrabbed(OVRGrabbable grabbable)
+    {
+        this.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = true;
+        this.transform.GetChild(0).GetComponent<Follow>().target = grabbable.grabbingHand;
+    }
+
+    public void GasketUngrabbed()
+    {
+        this.transform.GetChild(0).GetComponent<Follow>().target = this.transform.GetChild(0);
+        this.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
+    }
+
     IEnumerator AdjustFollowSmooth()
     {
         float offset = 0;
@@ -54,7 +66,7 @@ public class Gasket : MonoBehaviour
 
     public void DropGasket()
     {
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
         //foreach(Follow point in linePoints)
         //{
         //    point.enabled = false;

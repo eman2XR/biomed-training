@@ -14,21 +14,23 @@ public class GasketLinePoints : MonoBehaviour
     {
         if (!hooked)
         {
-            if (other.tag == "hook" || other.transform.parent.tag == "hook")
+            if( other.transform.parent)
             {
-                if (!hooked)
+                if (other.transform.parent.tag == "hook")
                 {
-                    if (isHookPoint)
+                    if (!hooked)
                     {
-                        transform.parent.GetComponent<Gasket>().GasketHooked();
-                        this.gameObject.GetComponent<Follow>().enabled = true;
-                        onHooked.Invoke();
-                        hooked = true;
+                        if (isHookPoint)
+                        {
+                            transform.parent.GetComponent<Gasket>().GasketHooked();
+                            this.gameObject.GetComponent<Follow>().enabled = true;
+                            onHooked.Invoke();
+                            hooked = true;
+                        }
+                        else
+                            hookPoint.IsBeingHooked();
                     }
-                    else
-                        hookPoint.IsBeingHooked();
-                }
-            }
+                } }
         }
     }
 
