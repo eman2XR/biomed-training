@@ -34,7 +34,7 @@ public class ScrewDriver : MonoBehaviour
         Vector3 lineEnd = lineStart + 0.1f * hand.transform.forward;
 
         // Draw the resuting line.
-        Debug.DrawLine(lineStart, lineEnd, Color.blue, Time.deltaTime);
+        //Debug.DrawLine(lineStart, lineEnd, Color.blue, Time.deltaTime);
 
         var currentAngleOnProgressAccumulatingAxis = hand.eulerAngles.z;
             var rotationChangeAngle = Mathf.DeltaAngle(currentAngleOnProgressAccumulatingAxis, _lastTransformPositionRotationAngleOnProgressAccumulatingAxis);
