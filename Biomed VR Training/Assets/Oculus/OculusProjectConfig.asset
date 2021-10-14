@@ -20,6 +20,6 @@ MonoBehaviour:
   enableNSCConfig: 1
   securityXmlPath: 
   skipUnneededShaders: 0
-  focusAware: 0
+  focusAware: 1
   requiresSystemKeyboard: 0
   systemSplashScreen: {fileID: 0}

@@ -45,7 +45,9 @@ public class OVRGrabbable : MonoBehaviour
     public bool isGrabbable = true;
     public bool isTouchable = true;
     public bool eventsOnly; //disable grabbing or touching but events still fired
-    public bool enableRigibodyOnDrop; 
+    public bool enableRigibodyOnDrop;
+
+    public bool snapped;
 
     public bool IsGrabbable
     {

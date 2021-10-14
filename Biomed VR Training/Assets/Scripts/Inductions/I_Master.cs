@@ -406,6 +406,7 @@ public class I_Master : MonoBehaviour {
         {
             if (!trans.name.Contains("INJECTOR"))
                 trans.parent = null;
+           //if (trans.GetComponent<OVRGrabbable>()) trans.GetComponent<OVRGrabbable>().grabPoints[0].enabled = true; //enable collider so it snaps
             trans.position = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].position;
             trans.rotation = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].rotation;
         }

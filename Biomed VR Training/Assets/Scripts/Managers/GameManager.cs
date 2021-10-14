@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject focusNotice;
     public GameObject logoReveal;
 
     private void Awake()
@@ -15,15 +16,23 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         logoReveal.SetActive(true);
-    }
-
-    void FocusLost()
-    {
-
+        OVRManager.InputFocusLost += LostFocus;
+        OVRManager.InputFocusAcquired += AcquiredFocus;
     }
 
     public void Restart()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN");
     }
+    
+    void LostFocus()
+    {
+        focusNotice.SetActive(true);
+    }
+
+    void AcquiredFocus()
+    {
+        focusNotice.SetActive(false);
+    }
+
 }

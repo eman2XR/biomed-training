@@ -18,6 +18,8 @@ public class E_Results : MonoBehaviour
     public int skippedSteps;
     public string time;
 
+    public GameObject retryButton;
+
     private void OnEnable()
     {
         //print("answers " + evManager.correctAnswers);
@@ -30,6 +32,11 @@ public class E_Results : MonoBehaviour
         {
             passText.SetActive(false);
             failText.SetActive(true);
+        }
+
+        if (percentage == 100)
+        {
+            retryButton.SetActive(false);
         }
 
         float minutes = Mathf.Floor(evManager.timer / 60);
@@ -47,7 +54,8 @@ public class E_Results : MonoBehaviour
         float timePenalty = evManager.timer/100;
         print(timePenalty);
         score = percentage - (Mathf.Clamp(skippedSteps*5, 0, 20) + Mathf.Clamp(timePenalty, 0, 20));
-        print("score : " + score);
+
+        //print("score : " + score);
     }
 
     //triggered by the I_master

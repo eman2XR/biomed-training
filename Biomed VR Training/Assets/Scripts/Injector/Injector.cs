@@ -179,11 +179,10 @@ public class Injector : MonoBehaviour
             connector3Removed = true;
 
         //force release the object
-        if (grabbable.grabbingHand)
-            grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        //if (grabbable.grabbingHand)
+            //grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
-        grabbable.GetComponent<Collider>().enabled = false;
-        grabbable.GetComponent<Connector>().enabled = false;
+        grabbable.GetComponent<Animator>().enabled = false;
         grabbable.transform.parent = backPanel;
     }
 

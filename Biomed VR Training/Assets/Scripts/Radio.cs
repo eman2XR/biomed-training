@@ -9,13 +9,14 @@ public class Radio : MonoBehaviour
     public List<AudioClip> station2Clips = new List<AudioClip>();
     public List<AudioClip> station3Clips = new List<AudioClip>();
 
-    public int currentStation = 1;
+    public int currentStation = 0;
     public int stationCurrentClip = 0;
 
     public GameObject popuop;
 
     AudioSource audioSource;
-
+    bool muted;
+    Coroutine co;
     private void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -44,15 +45,15 @@ public class Radio : MonoBehaviour
 
         PlayStation(currentStation);
 
-        StopAllCoroutines();
-        StartCoroutine(HideWithDelay());
+        if(co != null) StopCoroutine(co);
+        co = StartCoroutine(HideWithDelay());
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("["))
-            ChangeStation();
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown("["))
+    //        ChangeStation();
+    //}
 
     void PlayStation(int station)
     {
@@ -71,22 +72,25 @@ public class Radio : MonoBehaviour
 
     IEnumerator CheckAudio()
     {
+        //print("checking audio");
+
         yield return new WaitForSeconds(1);
-        if (!audioSource.isPlaying && audioSource.enabled)
+        if (audioSource.enabled && !audioSource.isPlaying)
         {
-            if (currentStation == 1)
-                audioSource.clip = station1Clips[stationCurrentClip + 1];
-            
-            if (currentStation == 2)
-                audioSource.clip = station2Clips[stationCurrentClip + 1];
-
-            if (currentStation == 3)
-                audioSource.clip = station3Clips[stationCurrentClip + 1];
-
             stationCurrentClip++;
             if (stationCurrentClip == 3) stationCurrentClip = 0;
+
+            if (currentStation == 1)
+                audioSource.clip = station1Clips[stationCurrentClip];
+            
+            if (currentStation == 2)
+                audioSource.clip = station2Clips[stationCurrentClip];
+
+            if (currentStation == 3)
+                audioSource.clip = station3Clips[stationCurrentClip];
+
             audioSource.Play();
-            print("change clip");
+            //print("change clip");
         }
         StartCoroutine(CheckAudio());
     }

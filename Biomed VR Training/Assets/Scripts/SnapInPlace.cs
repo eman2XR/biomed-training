@@ -30,8 +30,10 @@ public class SnapInPlace : MonoBehaviour
                     grabbableCollider = other;
                 }
 
-                if (grabbable.objectType == objectType)
+                if (grabbable.objectType == objectType && !grabbable.snapped)
                 {
+                    grabbable.snapped = true;
+
                     //force release the object
                     if(grabbable.grabbingHand)
                         grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
