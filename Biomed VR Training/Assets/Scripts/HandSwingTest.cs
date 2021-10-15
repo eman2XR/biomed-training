@@ -20,8 +20,8 @@ public class HandSwingTest : MonoBehaviour
     Vector3 initialPos;
     Quaternion initialRot;
 
-    public Vector3 leftHandPosOffset;
-    public Vector3 leftHandRotOffset;
+    //public Vector3 leftHandPosOffset;
+    //public Vector3 leftHandRotOffset;
 
     void Start()
     {
@@ -85,22 +85,22 @@ public class HandSwingTest : MonoBehaviour
         //allowRotation = true;
     }
 
-    public void IsUsingScrew(Transform target, Transform targetPostion, bool leftOnly)
+    public void IsUsingScrew(Transform target, Transform targetPostion, Transform targetPostionLeft)
     {
-        if (leftOnly && !isLeft)
-            return;
-
+        //print("left");
         transform.parent = target;
-        transform.localPosition = targetPostion.localPosition;
 
         if (isLeft)
         {
-            transform.localEulerAngles = (-targetPostion.localEulerAngles) + leftHandRotOffset;
-            transform.localPosition = (targetPostion.localPosition) + leftHandPosOffset;
+            transform.localEulerAngles = targetPostionLeft.localEulerAngles;
+            transform.localPosition = targetPostionLeft.localPosition;
             //transform.localPosition = transform.localPosition + leftHandOffset;
         }
         else
+        {
+            transform.localPosition = targetPostion.localPosition;
             transform.localEulerAngles = targetPostion.localEulerAngles;
+        }
         //transform.localEulerAngles = new Vector3(0, -115f, 8.5f);
         //allowRotation = true;
 

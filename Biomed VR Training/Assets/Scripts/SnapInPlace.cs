@@ -30,9 +30,9 @@ public class SnapInPlace : MonoBehaviour
                     grabbableCollider = other;
                 }
 
-                if (grabbable.objectType == objectType && !grabbable.snapped)
+                if (grabbable.objectType == objectType && !grabbable.Snapped)
                 {
-                    grabbable.snapped = true;
+                    grabbable.Snapped = true;
 
                     //force release the object
                     if(grabbable.grabbingHand)

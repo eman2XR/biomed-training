@@ -29,7 +29,7 @@ public class I_Step : MonoBehaviour {
     public I_Objective customObjective;
 
     //wait for audio before starting next step
-    bool waitedForAudio;
+    bool waitedForAudio = true; // [UPDATE] waiting removed
     bool stepChanged;
 
     #endregion

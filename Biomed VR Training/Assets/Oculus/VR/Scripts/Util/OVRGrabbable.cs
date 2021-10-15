@@ -46,7 +46,6 @@ public class OVRGrabbable : MonoBehaviour
     public bool isTouchable = true;
     public bool eventsOnly; //disable grabbing or touching but events still fired
     public bool enableRigibodyOnDrop;
-
     public bool snapped;
 
     public bool IsGrabbable
@@ -63,6 +62,11 @@ public class OVRGrabbable : MonoBehaviour
     {
         get { return eventsOnly; }
         set { eventsOnly = value; }
+    }
+    public bool Snapped
+    {
+        get { return snapped; }
+        set { snapped = value; }
     }
 
     /// <summary>

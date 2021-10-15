@@ -14,6 +14,7 @@ public class PivotPoint : MonoBehaviour
     public bool isTurning;
 
     public Transform targetPosition;
+    public Transform targetPositionLeft;
     bool isBusy;
     public bool leftHandOnly;
 
@@ -119,7 +120,7 @@ public class PivotPoint : MonoBehaviour
         if(isScrew) move = false;
         yield return new WaitForSeconds(0.1f);
         if(isScrew)
-            handSwing.IsUsingScrew(this.transform, targetPosition, leftHandOnly);
+            handSwing.IsUsingScrew(this.transform, targetPosition, targetPositionLeft);
         else
             handSwing.IsUsingKnob(this.transform, targetPosition, leftHandOnly);
         //handSwing.transform.localPosition = targetPosition.localPosition;

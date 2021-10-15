@@ -19,6 +19,7 @@ public class NewKnob : MonoBehaviour
     IEnumerator Rotate()
     {
         isBusy = true;
+        this.GetComponent<Collider>().enabled = false;
         float startRotation = transform.localEulerAngles.y;
         float endRotation = startRotation - 90f;
         float t = 0.0f;
@@ -29,6 +30,7 @@ public class NewKnob : MonoBehaviour
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, yRotation, transform.localEulerAngles.z);
             yield return null;
         }
+        this.GetComponent<Collider>().enabled = true;
         isBusy = false;
     }
 

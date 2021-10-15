@@ -291,8 +291,7 @@ public class Injector : MonoBehaviour
             grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
         grabbable.GetComponent<Collider>().enabled = false;
-        grabbable.GetComponent<Connector>().enabled = false;
-        grabbable.transform.parent = this.transform;
+        //grabbable.transform.parent = this.transform;
     }
 
     public void PlaceNewGasket()
