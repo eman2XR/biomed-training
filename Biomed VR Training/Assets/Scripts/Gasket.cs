@@ -36,7 +36,7 @@ public class Gasket : MonoBehaviour
     public void GasketUngrabbed()
     {
         this.transform.GetChild(0).GetComponent<Follow>().target = this.transform.GetChild(0);
-        this.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
+        //this.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
     }
 
     IEnumerator AdjustFollowSmooth()

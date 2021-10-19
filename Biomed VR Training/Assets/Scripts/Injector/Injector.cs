@@ -78,7 +78,7 @@ public class Injector : MonoBehaviour
 
         if (isInverted && !isHorizontal)
         {
-            if (Mathf.Abs(this.transform.localEulerAngles.z) >= 260 && Mathf.Abs(this.transform.localEulerAngles.z) <= 280)
+            if (Mathf.Abs(this.transform.localEulerAngles.z) >= 265 && Mathf.Abs(this.transform.localEulerAngles.z) <= 275)
             {
                 if (grabbable.grabbingHand)
                     grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
@@ -157,11 +157,12 @@ public class Injector : MonoBehaviour
     public void Connector3Grabbed(OVRGrabbable grabbable)
     {
         StartCoroutine(CoonectorGrabbedDelay(grabbable, "3"));
-        Destroy(backPanel.gameObject.GetComponent<Animator>());
     }
 
     IEnumerator CoonectorGrabbedDelay(OVRGrabbable grabbable, string connector)
     {
+        Destroy(backPanel.gameObject.GetComponent<Animator>());
+
         yield return new WaitForSeconds(1f);
         if (connector == "1")
         {
@@ -178,12 +179,13 @@ public class Injector : MonoBehaviour
         else if (connector == "3")
             connector3Removed = true;
 
+        //grabbable.GetComponent<Animator>().enabled = false;
+
         //force release the object
         //if (grabbable.grabbingHand)
             //grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
-        grabbable.GetComponent<Animator>().enabled = false;
-        grabbable.transform.parent = backPanel;
+        //grabbable.transform.parent = backPanel;
     }
 
     //triggered when screws are placed in the snap positions

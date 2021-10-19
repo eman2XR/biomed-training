@@ -30,6 +30,8 @@ public class Screw : MonoBehaviour
 
     public AudioClip onUpSound;
 
+    ScrewDriver screwdriver;
+
     private void Start()
     {
         collider = this.GetComponent<Collider>();
@@ -41,8 +43,13 @@ public class Screw : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "phillipsScrewdriver")
+        {
             if (!hasBeenUsed)
+            {
+                screwdriver = other.transform.parent.GetComponent<ScrewDriver>();
                 onTouch.Invoke();
+            }
+        }
     }
 
     private void Update()
@@ -100,7 +107,8 @@ public class Screw : MonoBehaviour
         screwdriverPivot.GetComponent<PivotPoint>().Detach();
         screwdriverPivot.SetActive(false);
         audio.clip = onUpSound;
-        audio.Play(); 
+        audio.Play();
+        screwdriver.ScrewUndone();
         hasBeenUsed = true;
     }
 

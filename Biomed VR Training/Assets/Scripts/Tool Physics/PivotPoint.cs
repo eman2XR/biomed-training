@@ -54,7 +54,7 @@ public class PivotPoint : MonoBehaviour
             {
                 if (other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand)
                 {
-                    handSwing = other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand.GetComponent<HandSwingTest>();
+                    handSwing = other.transform.parent.GetComponent<OVRGrabbable>().grabbingHand.GetComponent<HandSwingTest>();                 
                     hand = handSwing.transform.parent;
                     //hand = handSwing.pivot;
 
@@ -62,6 +62,9 @@ public class PivotPoint : MonoBehaviour
                     {
                         screwdriver = other.transform.parent.GetComponent<ScrewDriver>();
                         screwdriver.HandInPlace(hand);
+
+                        //other.transform.parent.GetComponent<Rigidbody>().isKinematic = true;
+                        //other.transform.parent.GetComponent<OVRGrabbable>().enableRigibodyOnDrop = false;
                     }
 
                     initialHandRotation = hand.localEulerAngles;

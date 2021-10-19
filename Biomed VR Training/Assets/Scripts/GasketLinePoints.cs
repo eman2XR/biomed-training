@@ -16,10 +16,12 @@ public class GasketLinePoints : MonoBehaviour
         {
             if( other.transform.parent)
             {
-                if (other.transform.parent.tag == "hook")
+                if (other.transform.parent.tag == "hook" && !other.transform.parent.GetComponent<HookTool>().hasGasket)
                 {
                     if (!hooked)
                     {
+                        other.transform.parent.GetComponent<HookTool>().hasGasket = true;
+
                         if (isHookPoint)
                         {
                             transform.parent.GetComponent<Gasket>().GasketHooked();

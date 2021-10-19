@@ -7,6 +7,7 @@ public class Connector : MonoBehaviour
     OVRGrabbable grabbable;
     Vector3 initialPos;
     float range = 0.05f;
+    public Transform target;
 
     private void OnEnable()
     {
@@ -16,9 +17,9 @@ public class Connector : MonoBehaviour
 
     private void Update()
     {
-        this.transform.position = new Vector3(Mathf.Clamp(transform.position.x, initialPos.x - range, initialPos.x + range),
-                                                Mathf.Clamp(transform.position.y, initialPos.y - range, initialPos.y + range),
-                                                Mathf.Clamp(transform.position.z, initialPos.z - range, initialPos.z + range));
+        //this.transform.position = new Vector3(Mathf.Clamp(transform.position.x, initialPos.x - range, initialPos.x + range),
+        //                                        Mathf.Clamp(transform.position.y, initialPos.y - range, initialPos.y + range),
+        //                                        Mathf.Clamp(transform.position.z, initialPos.z - range, initialPos.z + range));
 
         if (Vector3.Distance(transform.position, initialPos) > 0.35f)
         {
@@ -29,5 +30,12 @@ public class Connector : MonoBehaviour
             //    grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
             //}
         }
+    }
+
+    public void MoveToTarget()
+    {
+        this.GetComponent<Animator>().enabled = false;
+        this.gameObject.SetActive(false);
+        target.gameObject.SetActive(true);
     }
 }

@@ -20,6 +20,7 @@ TagManager:
   - floor
   - gazeUI
   - inspectionButton
+  - gasketGrabber
   layers:
   - Default
   - TransparentFX

@@ -11,11 +11,10 @@ public class Floor : MonoBehaviour
         if (other.GetComponent<SnapToOrigin>())
             StartCoroutine(Delay(other.GetComponent<SnapToOrigin>()));
 
-        if(other.transform.parent)
-         if (other.transform.parent.GetComponent<SnapToOrigin>())
+        if (other.transform.parent)
+            if (other.transform.parent.GetComponent<SnapToOrigin>())
                 StartCoroutine(Delay(other.transform.parent.GetComponent<SnapToOrigin>()));
     }
-
     IEnumerator Delay(SnapToOrigin obj)
     {
         yield return new WaitForSeconds(1);

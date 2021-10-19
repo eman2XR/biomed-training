@@ -13,6 +13,7 @@ public class WasteBin : MonoBehaviour
     public bool finalGasketIn;
     int counter;
     List<GameObject> gasketsIn = new List<GameObject>();
+    public HookTool hookTool;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,6 +30,7 @@ public class WasteBin : MonoBehaviour
             obj.transform.parent.GetComponent<Gasket>().DropGasket();
             audio.Play();
             onGasketIn.Invoke();
+            hookTool.hasGasket = false;
 
             counter++;
             if (counter == 4)

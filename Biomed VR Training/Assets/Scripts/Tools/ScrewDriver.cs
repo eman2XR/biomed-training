@@ -56,6 +56,28 @@ public class ScrewDriver : MonoBehaviour
         hand = inHand;
         _lastTransformPositionRotationAngleOnProgressAccumulatingAxis = hand.eulerAngles.z;
 
+        //make screwdriver fixed even if dropped
+        grabbable.isGrabbable = false;
+    }
+
+    //triggered by the screw
+    public void ScrewUndone()
+    {
+        //make screwdriver fixed even if dropped
+        grabbable.isGrabbable = true;
+        grabbable.GetComponent<Outline>().enabled = false;
+        StartCoroutine(DropWithDelay());
+    }
+
+    IEnumerator DropWithDelay()
+    {
+        yield return new WaitForSeconds(1);
+        if (!OVRInput.Get(OVRInput.Button.PrimaryHandTrigger) && !OVRInput.Get(OVRInput.Button.SecondaryHandTrigger) && !OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger) && !OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
+        {
+            grabbable.GetComponent<Outline>().enabled = false;
+            if(grabbable.grabbingHand)
+                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        }
     }
 
     void UpdateRotation(float absoluteDriverMovedAngle, float driverMovedAngle)
@@ -81,5 +103,6 @@ public class ScrewDriver : MonoBehaviour
     }
 
     //public void RotateAroundTracked(this Transform t, Vector3 point, Vector3 axis, float angle) => t.RotateAround(point, axis, angle);
+
 
 }
