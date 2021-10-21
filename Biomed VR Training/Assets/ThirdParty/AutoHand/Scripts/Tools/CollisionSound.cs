@@ -45,7 +45,7 @@ public class CollisionSound : MonoBehaviour{
             {
                 if (collision.collider.tag == "floor")
                 {
-                    print("collision");
+                    //print("collision");
                     source.PlayOneShot(clipFloor == null ? source.clip : clipFloor, velocityVolumeCurve.Evaluate(collision.relativeVelocity.magnitude * velocityAmp) * volumeAmp);
                 }
                 else

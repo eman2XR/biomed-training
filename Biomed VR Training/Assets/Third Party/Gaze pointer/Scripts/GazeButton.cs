@@ -104,6 +104,14 @@ public class GazeButton : MonoBehaviour
     {
         onClick.Invoke();
         Pointer.instance.OnClickButton();
+        if(this.gameObject.activeSelf && isInspectionButton)
+            StartCoroutine(ClickDelay());
+    }
+
+    IEnumerator ClickDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        this.gameObject.SetActive(false);
     }
 
     public void OnStateChanged()

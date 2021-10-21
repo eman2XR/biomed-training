@@ -25,6 +25,10 @@ public class NumberPad : MonoBehaviour
                     inputText.text = inputText.text.Substring(0, inputText.text.Length - 1);
                 }
             }
+            else if (key == "space")
+            {
+               inputText.text = inputText.text + " ";
+            }
             else
                 inputText.text = inputText.text + key;
         }

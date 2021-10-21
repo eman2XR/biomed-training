@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using CBET;
 
 public class Leaderboard : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Leaderboard : MonoBehaviour
 
         //record the current entry
         Record(nameField.text, results.score, results.scoreQuestions, results.time, results.skippedSteps);
+        print(results.time);
+        SendLeaderboard.Get().NewEntry(new LeaderboardEntry(nameField.text, 500, (int)results.score, 100));
 
         LoadScores(); //sort the entries
 
