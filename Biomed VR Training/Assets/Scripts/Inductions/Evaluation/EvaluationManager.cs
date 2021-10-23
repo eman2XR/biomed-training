@@ -30,7 +30,25 @@ public class EvaluationManager : MonoBehaviour
 
     public void AnswerGiven(E_Answer answer)
     {
-        if (answer.isCorrect) correctAnswers++;
+        StartCoroutine(AnswerWasGiven(answer));
+    }
+
+    IEnumerator AnswerWasGiven(E_Answer answer)
+    {
+        if (answer.isCorrect)
+        {
+            correctAnswers++;
+            answer.transform.GetChild(0).GetChild(1).GetChild(1).gameObject.SetActive(true);//show the tick mark
+        }
+        else
+        {
+            //get the correct answers and show the tick next to it
+            foreach(E_Answer ans in answer.transform.parent.GetComponentsInChildren<E_Answer>())
+                if(ans.isCorrect) ans.transform.GetChild(0).GetChild(1).GetChild(1).gameObject.SetActive(true);
+            answer.transform.GetChild(0).GetChild(1).GetChild(0).gameObject.SetActive(true);//show the X
+        }
+
+        yield return new WaitForSeconds(2);
         questionsList.GetChild(currentQuestion).gameObject.SetActive(false);
         currentQuestion++;
 

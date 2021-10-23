@@ -85,9 +85,6 @@ public class SwivelObject : MonoBehaviour
     // If the drive is limited as is at min/max, angles greater than this are ignored 
     private float minMaxAngularThreshold = 1.0f;
     private bool driving = false;
-    Quaternion initialRot;
-
-    bool vibrating;
 
     void Start()
     {
@@ -113,8 +110,32 @@ public class SwivelObject : MonoBehaviour
         }
 
         UpdateAll();
+    }
 
-        initialRot = this.transform.localRotation;
+    public void ParentWasRotated()
+    {
+        worldPlaneNormal = new Vector3(0.0f, 0.0f, 0.0f);
+        worldPlaneNormal[(int)axisOfRotation] = 1.0f;
+
+        localPlaneNormal = worldPlaneNormal;
+
+        if (transform.parent)
+        {
+            worldPlaneNormal = transform.parent.localToWorldMatrix.MultiplyVector(worldPlaneNormal).normalized;
+        }
+
+        if (limited)
+        {
+            start = Quaternion.identity;
+            outAngle = transform.localEulerAngles[(int)axisOfRotation];
+        }
+        else
+        {
+            start = Quaternion.AngleAxis(transform.localEulerAngles[(int)axisOfRotation], localPlaneNormal);
+            outAngle = 0.0f;
+        }
+
+        UpdateAll();
     }
 
     public void Grabbed()
@@ -214,7 +235,6 @@ public class SwivelObject : MonoBehaviour
         UpdateGameObject();
         // UpdateDebugText();
     }
-
 
     //-------------------------------------------------
     // Updates the Rotation of the GamObject
