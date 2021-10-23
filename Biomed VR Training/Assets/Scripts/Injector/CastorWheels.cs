@@ -22,13 +22,13 @@ public class CastorWheels : MonoBehaviour
             if (lastOutAngle > rotator.outAngle)
             {
                 foreach(Transform wheel in wheels)
-                    wheel.localEulerAngles = new Vector3(wheel.localEulerAngles.x, wheel.localEulerAngles.y, initalRot[wheels.IndexOf(wheel)] - 8);
+                    wheel.localEulerAngles = new Vector3(wheel.localEulerAngles.x, wheel.localEulerAngles.y, initalRot[wheels.IndexOf(wheel)] - 250 * Time.deltaTime);
                 lastOutAngle = rotator.outAngle;
             }
             if (lastOutAngle < rotator.outAngle)
             {
                 foreach (Transform wheel in wheels)
-                    wheel.localEulerAngles = new Vector3(wheel.localEulerAngles.x, wheel.localEulerAngles.y, initalRot[wheels.IndexOf(wheel)] + 8);
+                    wheel.localEulerAngles = new Vector3(wheel.localEulerAngles.x, wheel.localEulerAngles.y, initalRot[wheels.IndexOf(wheel)] + 250 * Time.deltaTime);
                 lastOutAngle = rotator.outAngle;
             }
         }
