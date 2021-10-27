@@ -27,7 +27,7 @@ public class Screw : MonoBehaviour
     float lastValue;
     Vector3 initLocPos;
     bool isTurning;
-
+    public bool fullyUnscrewed;
     public AudioClip onUpSound;
 
     ScrewDriver screwdriver;
@@ -47,7 +47,9 @@ public class Screw : MonoBehaviour
             if (!hasBeenUsed)
             {
                 screwdriver = other.transform.parent.GetComponent<ScrewDriver>();
+                screwdriver.isScrewing = true;
                 onTouch.Invoke();
+                transform.GetChild(2).gameObject.SetActive(false);//hide ghosting
             }
         }
     }
@@ -109,6 +111,7 @@ public class Screw : MonoBehaviour
         audio.clip = onUpSound;
         audio.Play();
         screwdriver.ScrewUndone();
+        transform.GetChild(2).gameObject.SetActive(false);//hide ghosting
         hasBeenUsed = true;
     }
 

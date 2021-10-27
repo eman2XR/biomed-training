@@ -119,12 +119,18 @@ public class I_Step : MonoBehaviour {
             waitedForAudio = true;
 
         //run everyting with a slight delay to avoid conflicts 
-        Run.After(0.7f, () => { 
-        
+        Run.After(0.7f, () => {
+
+        //if user spent to long on this step give a hint to skip step
+        Run.After(50f, () => {
+            if (this.gameObject.activeInHierarchy)
+                inductionMaster.otherSettings.stepTooLongVO.Play();
+        });
+
         //activate any labels
         foreach (GameObject label in labels)
-           if(label)
-              label.SetActive(true);
+        if(label)
+            label.SetActive(true);
 
         //setup objectives type
         foreach (GameObject objective in objectives)
@@ -237,6 +243,11 @@ public class I_Step : MonoBehaviour {
             }
             stepChanged = true;
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     void AudioFinished()

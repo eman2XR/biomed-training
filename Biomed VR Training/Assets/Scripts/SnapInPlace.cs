@@ -32,10 +32,12 @@ public class SnapInPlace : MonoBehaviour
 
                 if (grabbable.objectType == objectType && !grabbable.Snapped)
                 {
+                    snapped = true;
                     grabbable.Snapped = true;
+                    this.GetComponent<Collider>().enabled = false;
 
                     //force release the object
-                    if(grabbable.grabbingHand)
+                    if (grabbable.grabbingHand)
                         grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
                     //disable collider and physics
@@ -43,6 +45,7 @@ public class SnapInPlace : MonoBehaviour
                     grabbable.grabPoints[0].enabled = false;
                     grabbable.GetComponent<Rigidbody>().isKinematic = true;
                     grabbable.GetComponent<Outline>().enabled = false;
+                    grabbableCollider.enabled = false;
                     //grabbable.isTouchable = false;
                     //grabbable.isGrabbable = false;
 
@@ -59,8 +62,6 @@ public class SnapInPlace : MonoBehaviour
                     StartCoroutine(DisableObject());
 
                     OnSnapped.Invoke();
-
-                    snapped = true;
                 }
             }
         }
@@ -74,8 +75,6 @@ public class SnapInPlace : MonoBehaviour
         if (transform.childCount > 0)
             if (this.transform.GetChild(0).GetComponent<Renderer>())
                 this.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
-
-        this.GetComponent<Collider>().enabled = false;
 
         //this.gameObject.SetActive(false);
     }

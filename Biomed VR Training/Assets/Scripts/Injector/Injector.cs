@@ -39,6 +39,7 @@ public class Injector : MonoBehaviour
     public Transform newGasket;
     public Transform oldGasket;
     public GameObject horizontalDirections;
+    public GameObject backPanelHandsIndicator;
 
     int counter;
     int counter1;
@@ -58,6 +59,7 @@ public class Injector : MonoBehaviour
     OVRGrabbable grabbable;
 
     public UnityEvent onKnobsBackIn;
+    public I_Master iMaster;
 
     private void Start()
     {
@@ -66,24 +68,31 @@ public class Injector : MonoBehaviour
 
     void Update()
     {
-        if (!isInverted)
+        if (iMaster.currentStep == 0)
         {
-            if (this.transform.localEulerAngles.z >= 165 && this.transform.localEulerAngles.z <= 185)
+            if (!isInverted)
             {
-                if (grabbable.grabbingHand)
-                    grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
-                isInverted = true;
+                if (this.transform.localEulerAngles.z >= 165 && this.transform.localEulerAngles.z <= 185)
+                {
+                    if (grabbable.grabbingHand)
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                    isInverted = true;
+                }
             }
         }
 
-        if (isInverted && !isHorizontal)
+        if (iMaster.currentStep == 11)
         {
-            if (Mathf.Abs(this.transform.localEulerAngles.z) >= 265 && Mathf.Abs(this.transform.localEulerAngles.z) <= 275)
+            if (isInverted && !isHorizontal)
             {
-                if (grabbable.grabbingHand)
-                    grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
-                horizontalDirections.SetActive(false);
-                isHorizontal = true;
+                if (Mathf.Abs(this.transform.localEulerAngles.z) >= 265 && Mathf.Abs(this.transform.localEulerAngles.z) <= 275)
+                {
+                    if (grabbable.grabbingHand)
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                    horizontalDirections.SetActive(false);
+                    backPanelHandsIndicator.SetActive(true);
+                    isHorizontal = true;
+                }
             }
         }
 

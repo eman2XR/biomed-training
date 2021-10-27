@@ -26,7 +26,6 @@ public class GazeButton : MonoBehaviour
     public bool inspected;
     bool isHovered;
     float timer;
-
     private void Start()
     {
         if (buttonParent == null)
@@ -110,7 +109,8 @@ public class GazeButton : MonoBehaviour
 
     IEnumerator ClickDelay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
+        this.transform.GetChild(0).gameObject.SetActive(false);
         this.gameObject.SetActive(false);
     }
 

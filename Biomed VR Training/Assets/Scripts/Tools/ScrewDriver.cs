@@ -14,6 +14,8 @@ public class ScrewDriver : MonoBehaviour
     public float movedAngles;
     OVRGrabbable grabbable;
 
+    public bool isScrewing;
+
     private void Start()
     {
         grabbable = this.GetComponent<OVRGrabbable>();
@@ -21,8 +23,22 @@ public class ScrewDriver : MonoBehaviour
 
     private void Update()
     {
-        if(hand) GetMovedAngle();
+        if (hand) GetMovedAngle();
         //debugText.text = hand.eulerAngles.z.ToString();
+
+        if (!isScrewing) //drop the screwdriver if not screwing and grabbing is released
+        {
+            if ((OVRInput.GetUp(OVRInput.RawButton.LHandTrigger) && !OVRInput.Get(OVRInput.RawButton.LIndexTrigger)) || (OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger) && !OVRInput.Get(OVRInput.RawButton.LHandTrigger)))
+            { 
+                if (grabbable.grabbingHand)
+                    if (grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+            }
+                if ((OVRInput.GetUp(OVRInput.RawButton.RHandTrigger) && !OVRInput.Get(OVRInput.RawButton.RIndexTrigger)) || (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger) && !OVRInput.Get(OVRInput.RawButton.RHandTrigger)))
+                        if (grabbable.grabbingHand)
+                            if (!grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
+                                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+        }
     }
 
     private void GetMovedAngle()
@@ -64,6 +80,17 @@ public class ScrewDriver : MonoBehaviour
     public void ScrewUndone()
     {
         //make screwdriver fixed even if dropped
+        isScrewing = false;
+        grabbable.isGrabbable = true;
+        grabbable.GetComponent<Outline>().enabled = false;
+        StartCoroutine(DropWithDelay());
+    }
+
+    //triggered by the pivotpoint
+    public void DetachedFromScrew()
+    {
+        //make screwdriver fixed even if dropped
+        isScrewing = false;
         grabbable.isGrabbable = true;
         grabbable.GetComponent<Outline>().enabled = false;
         StartCoroutine(DropWithDelay());
@@ -72,11 +99,18 @@ public class ScrewDriver : MonoBehaviour
     IEnumerator DropWithDelay()
     {
         yield return new WaitForSeconds(1);
-        if (!OVRInput.Get(OVRInput.Button.PrimaryHandTrigger) && !OVRInput.Get(OVRInput.Button.SecondaryHandTrigger) && !OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger) && !OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
+        if (!isScrewing)
         {
-            grabbable.GetComponent<Outline>().enabled = false;
-            if(grabbable.grabbingHand)
-                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+            if (!OVRInput.Get(OVRInput.RawButton.LHandTrigger) && !OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
+            {
+                if (grabbable.grabbingHand)
+                    if (grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+            }
+            if (!OVRInput.Get(OVRInput.RawButton.RHandTrigger) && !OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
+                if (grabbable.grabbingHand)
+                    if (!grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
         }
     }
 

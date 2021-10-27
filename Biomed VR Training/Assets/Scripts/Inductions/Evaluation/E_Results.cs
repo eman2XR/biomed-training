@@ -16,7 +16,7 @@ public class E_Results : MonoBehaviour
     public float score;
     public int scoreQuestions;
     public int skippedSteps;
-    public string time;
+    public int time;
 
     public GameObject retryButton;
 
@@ -48,7 +48,7 @@ public class E_Results : MonoBehaviour
         pointsText.text = skippedSteps + " steps skipped";
         
         scoreQuestions = (int)percentage;
-        time = secondsText.text;
+        time = evManager.timer;
 
         //calculate an overall score based on correct answes, skipped steps and time
         float timePenalty = evManager.timer/100;

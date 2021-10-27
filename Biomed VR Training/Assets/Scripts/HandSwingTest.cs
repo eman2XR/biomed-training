@@ -20,6 +20,7 @@ public class HandSwingTest : MonoBehaviour
     Vector3 initialPos;
     Quaternion initialRot;
 
+    OVRGrabber grabbable;
     //public Vector3 leftHandPosOffset;
     //public Vector3 leftHandRotOffset;
 
@@ -28,6 +29,8 @@ public class HandSwingTest : MonoBehaviour
         initRotation = this.transform.localEulerAngles;
 
         initialParent = handVisual.transform.parent;
+
+        grabbable = this.GetComponent<OVRGrabber>();
     }
 
     private void Update()
@@ -56,6 +59,20 @@ public class HandSwingTest : MonoBehaviour
             else
             {
                 this.transform.parent.eulerAngles = new Vector3(this.transform.parent.eulerAngles.x + ((parent.position.y - initY) * 1), this.transform.parent.eulerAngles.y, this.transform.parent.eulerAngles.z);
+            }
+        }
+
+        if (!grabbable.grabbedObject)
+        {
+            if (isLeft)
+            {
+                if (OVRInput.GetUp(OVRInput.RawButton.LHandTrigger) || OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
+                    ParentBack();
+            }
+            else
+            {
+                if (OVRInput.GetUp(OVRInput.RawButton.RHandTrigger) || OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger))
+                    ParentBack();
             }
         }
     }

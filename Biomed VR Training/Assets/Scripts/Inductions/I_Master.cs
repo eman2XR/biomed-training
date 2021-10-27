@@ -152,7 +152,8 @@ public class I_Master : MonoBehaviour {
         public AudioSource stepCompletedSound;
         public AudioSource moduleCompletedSound;
         public AudioSource inductionCompletedSound;
-        public AudioSource changeStepSound;
+        public AudioSource changeStepSound;        
+        public AudioSource stepTooLongVO;
 
         //extra module [needs fix]
         [ReorderableList]
@@ -177,7 +178,7 @@ public class I_Master : MonoBehaviour {
 
         public E_Results results;
         public EvaluationManager evManager;
-
+        
     }
     [Background(ColorEnum.Grey)]
     public OtherSettings otherSettings;
@@ -330,7 +331,7 @@ public class I_Master : MonoBehaviour {
 
         if(currentStep == steps.Count)
         {
-            print("Induction Finished");
+            print("Instructions Finished");
             EndOfInduction();
             return;
         }
@@ -406,9 +407,14 @@ public class I_Master : MonoBehaviour {
         {
             if (!trans.name.Contains("INJECTOR"))
                 trans.parent = null;
-           //if (trans.GetComponent<OVRGrabbable>()) trans.GetComponent<OVRGrabbable>().grabPoints[0].enabled = true; //enable collider so it snaps
-            trans.position = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].position;
-            trans.rotation = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].rotation;
+            //if (trans.GetComponent<OVRGrabbable>()) trans.GetComponent<OVRGrabbable>().grabPoints[0].enabled = true; //enable collider so it snaps
+            if (trans.GetComponent<MoveToSnapPos>()) 
+                trans.GetComponent<MoveToSnapPos>().FindTargetSnapPos();
+            else
+            {
+                trans.position = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].position;
+                trans.rotation = steps[currentStep].objectsToMoveTargets[steps[currentStep].objectsToMove.IndexOf(trans)].rotation;
+            }
         }
 
         steps[currentStep].skipStepEvent.Invoke();

@@ -17,9 +17,9 @@ public class Leaderboard : MonoBehaviour
         //PlayerPrefs.DeleteAll();
 
         //record the current entry
-        Record(nameField.text, results.score, results.scoreQuestions, results.time, results.skippedSteps);
+        Record(nameField.text, results.score, results.scoreQuestions, results.secondsText.text, results.skippedSteps);
         print(results.time);
-        SendLeaderboard.Get().NewEntry(new LeaderboardEntry(nameField.text, 500, (int)results.score, 100));
+        SendLeaderboard.Get().NewEntry(new LeaderboardEntry(nameField.text, results.time*1000, results.scoreQuestions, 100));
 
         LoadScores(); //sort the entries
 

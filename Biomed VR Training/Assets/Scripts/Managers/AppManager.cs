@@ -24,7 +24,12 @@ public class AppManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN");
     }
-    
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     void LostFocus()
     {
         focusNotice.SetActive(true);

@@ -113,6 +113,10 @@ public class PivotPoint : MonoBehaviour
         handSwing.ParentBack();
         move = false;
         isBusy = false;
+        if (screwdriver) 
+            screwdriver.DetachedFromScrew();
+        if (isScrew && !screw.fullyUnscrewed)
+            screw.transform.GetChild(2).gameObject.SetActive(true); //show ghosting
         //print("unhook");
     }
 

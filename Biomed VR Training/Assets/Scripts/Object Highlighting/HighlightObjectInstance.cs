@@ -18,7 +18,8 @@ public class HighlightObjectInstance : MonoBehaviour
     public void Highlight()
     {
         flashing = true;
-        StartCoroutine(FlashObject(0));
+        if(this.gameObject.activeSelf)
+            StartCoroutine(FlashObject(0));
     }
 
     public void HighlightWithDelay(float delay)
