@@ -143,6 +143,8 @@ public class I_Master : MonoBehaviour {
     public int currentStep;
     public float timer;
     bool runTimer = true;
+    [HideInInspector]
+    public bool stepToolongSoundPlayed;
 
     //other variables
     [System.Serializable]

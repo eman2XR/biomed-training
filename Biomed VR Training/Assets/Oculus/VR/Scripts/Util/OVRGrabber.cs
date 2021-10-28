@@ -262,8 +262,6 @@ public class OVRGrabber : MonoBehaviour
             }
         }
 
-        // Disable grab volumes to prevent overlaps
-        GrabVolumeEnable(false);
 
         if (closestGrabbable != null && closestGrabbable.eventsOnly)
         {
@@ -272,6 +270,9 @@ public class OVRGrabber : MonoBehaviour
             //print("grabbed");
             return;
         }
+
+        // Disable grab volumes to prevent overlaps
+        GrabVolumeEnable(false);
 
         if (closestGrabbable != null && closestGrabbable.isGrabbable)
         {
@@ -366,7 +367,7 @@ public class OVRGrabber : MonoBehaviour
         if (m_grabbedObj != null && m_grabbedObj.eventsOnly)
         {
             m_grabbedObj.GrabEventEnd(this);
-            //print("grab end");
+            GrabVolumeEnable(true);
             return;
         }
 

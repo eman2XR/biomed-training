@@ -29,15 +29,21 @@ public class ScrewDriver : MonoBehaviour
         if (!isScrewing) //drop the screwdriver if not screwing and grabbing is released
         {
             if ((OVRInput.GetUp(OVRInput.RawButton.LHandTrigger) && !OVRInput.Get(OVRInput.RawButton.LIndexTrigger)) || (OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger) && !OVRInput.Get(OVRInput.RawButton.LHandTrigger)))
-            { 
+            {
                 if (grabbable.grabbingHand)
                     if (grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
+                    {
                         grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                        isScrewing = false;
+                    }
             }
-                if ((OVRInput.GetUp(OVRInput.RawButton.RHandTrigger) && !OVRInput.Get(OVRInput.RawButton.RIndexTrigger)) || (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger) && !OVRInput.Get(OVRInput.RawButton.RHandTrigger)))
-                        if (grabbable.grabbingHand)
-                            if (!grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
-                                grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+            if ((OVRInput.GetUp(OVRInput.RawButton.RHandTrigger) && !OVRInput.Get(OVRInput.RawButton.RIndexTrigger)) || (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger) && !OVRInput.Get(OVRInput.RawButton.RHandTrigger)))
+                if (grabbable.grabbingHand)
+                    if (!grabbable.grabbingHand.GetComponent<HandSwingTest>().isLeft)
+                    {
+                        grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
+                        isScrewing = false;
+                    }
         }
     }
 
@@ -89,6 +95,7 @@ public class ScrewDriver : MonoBehaviour
     //triggered by the pivotpoint
     public void DetachedFromScrew()
     {
+        StopAllCoroutines();
         //make screwdriver fixed even if dropped
         isScrewing = false;
         grabbable.isGrabbable = true;
@@ -137,6 +144,4 @@ public class ScrewDriver : MonoBehaviour
     }
 
     //public void RotateAroundTracked(this Transform t, Vector3 point, Vector3 axis, float angle) => t.RotateAround(point, axis, angle);
-
-
 }

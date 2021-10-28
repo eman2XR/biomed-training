@@ -100,9 +100,15 @@ public class PivotPoint : MonoBehaviour
     {
         if (move)
             this.transform.LookAt(hand);
-        
-        if(isBusy && Vector3.Distance(hand.position, this.transform.position) > unhookDistance)
-            Detach();
+
+        if (!isScrew)
+        {
+            if (isBusy && (Vector3.Distance(hand.position, this.transform.position) > unhookDistance))
+            {
+                //print("detach " + this.transform.parent.name);
+                Detach();
+            }
+        }
 
         //if(isBusy)
             //handSwing.transform.GetChild(0).localEulerAngles = new Vector3(-hand.localEulerAngles.z, handSwing.transform.GetChild(0).localEulerAngles.y, /handSwing.transform.GetChild(0).localEulerAngles.z);
@@ -110,13 +116,26 @@ public class PivotPoint : MonoBehaviour
 
     public void Detach()
     {
-        handSwing.ParentBack();
-        move = false;
-        isBusy = false;
-        if (screwdriver) 
-            screwdriver.DetachedFromScrew();
-        if (isScrew && !screw.fullyUnscrewed)
-            screw.transform.GetChild(2).gameObject.SetActive(true); //show ghosting
+        if (isScrew)
+        {
+            if (screwdriver.isScrewing)
+            {
+                //if (Vector3.Distance(hand.position, this.transform.position) < unhookDistance) return;
+                handSwing.ParentBack();
+                move = false;
+                isBusy = false;
+                if (screwdriver)
+                    screwdriver.DetachedFromScrew();
+                if (isScrew && !screw.fullyUnscrewed)
+                    screw.transform.GetChild(2).gameObject.SetActive(true); //show ghosting
+            }
+        }
+        else
+        {
+            handSwing.ParentBack();
+            move = false;
+            isBusy = false;
+        }
         //print("unhook");
     }
 

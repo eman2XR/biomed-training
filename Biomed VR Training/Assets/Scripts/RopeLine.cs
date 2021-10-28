@@ -47,10 +47,10 @@ public class RopeLine : MonoBehaviour
        // whatIsHangingFromTheRope.GetComponent<Rigidbody>().mass = loadMass;
     }
 
-    void Update()
+    void LateUpdate()
     {
         //Add more/less rope
-        UpdateWinch();
+        //UpdateWinch();
 
         //Display the rope with a line renderer
         DisplayRope();

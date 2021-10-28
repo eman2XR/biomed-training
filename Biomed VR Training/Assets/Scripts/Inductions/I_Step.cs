@@ -122,9 +122,12 @@ public class I_Step : MonoBehaviour {
         Run.After(0.7f, () => {
 
         //if user spent to long on this step give a hint to skip step
-        Run.After(50f, () => {
-            if (this.gameObject.activeInHierarchy)
+        Run.After(60f, () => {
+            if (this.gameObject && this.gameObject.activeInHierarchy && !inductionMaster.stepToolongSoundPlayed)
+            {
                 inductionMaster.otherSettings.stepTooLongVO.Play();
+                inductionMaster.stepToolongSoundPlayed = true;
+            }
         });
 
         //activate any labels
@@ -248,6 +251,7 @@ public class I_Step : MonoBehaviour {
     private void OnDisable()
     {
         StopAllCoroutines();
+        inductionMaster.otherSettings.stepTooLongVO.Stop();
     }
 
     void AudioFinished()

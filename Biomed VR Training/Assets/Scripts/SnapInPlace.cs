@@ -35,13 +35,14 @@ public class SnapInPlace : MonoBehaviour
                     snapped = true;
                     grabbable.Snapped = true;
                     this.GetComponent<Collider>().enabled = false;
+                    other.enabled = false;
 
                     //force release the object
                     if (grabbable.grabbingHand)
                         grabbable.grabbingHand.GetComponent<OVRGrabber>().ForceRelease(grabbable);
 
                     //disable collider and physics
-                    other.enabled = false;
+                    grabbable.isGrabbable = false;
                     grabbable.grabPoints[0].enabled = false;
                     grabbable.GetComponent<Rigidbody>().isKinematic = true;
                     grabbable.GetComponent<Outline>().enabled = false;
