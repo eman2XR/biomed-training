@@ -22,7 +22,7 @@ public class AppManager : MonoBehaviour
 
     public void Restart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MAIN");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     public void Quit()
