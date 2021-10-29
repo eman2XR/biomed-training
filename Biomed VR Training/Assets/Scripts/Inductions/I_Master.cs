@@ -145,6 +145,7 @@ public class I_Master : MonoBehaviour {
     bool runTimer = true;
     [HideInInspector]
     public bool stepToolongSoundPlayed;
+    public Transform evaluationPanel;
 
     //other variables
     [System.Serializable]
@@ -338,6 +339,15 @@ public class I_Master : MonoBehaviour {
             return;
         }
 
+        //if last step diable the skip/next step button
+        if (currentStep == steps.Count - 1)
+        {
+            print("last step");
+            nextButton.transform.GetChild(0).gameObject.SetActive(false);
+            nextButton.transform.GetChild(1).gameObject.SetActive(false);
+            stepsCounterButton.transform.parent.gameObject.SetActive(false);
+        }
+
         //check for automatic step switching
         if (steps[currentStep].switchesAutomatically)
         {
@@ -430,6 +440,15 @@ public class I_Master : MonoBehaviour {
             return;
         }
 
+        //if last step diable the skip/next step button
+        if (currentStep == steps.Count - 1)
+        {
+            print("last step");
+            nextButton.transform.GetChild(0).gameObject.SetActive(false);
+            nextButton.transform.GetChild(1).gameObject.SetActive(false);
+            stepsCounterButton.transform.parent.gameObject.SetActive(false);
+        }
+
         //check for automatic step switching
         if (steps[currentStep].switchesAutomatically)
         {
@@ -494,6 +513,15 @@ public class I_Master : MonoBehaviour {
             return;
         }
 
+        //if last step diable the skip/next step button
+        if (currentStep == steps.Count - 2)
+        {
+            print("last step");
+            nextButton.transform.GetChild(0).gameObject.SetActive(false);
+            nextButton.transform.GetChild(1).gameObject.SetActive(false);
+            stepsCounterButton.transform.parent.gameObject.SetActive(false);
+        }
+
         //check for automatic step switching
         if (steps[currentStep].switchesAutomatically)
         {
@@ -550,7 +578,7 @@ public class I_Master : MonoBehaviour {
         //end timer
         runTimer = false;
 
-        otherSettings.inductionCompletedSound.Play();
+        //otherSettings.inductionCompletedSound.Play();
         otherSettings.inductionCompleted = true;
 
         //steps counter ui
@@ -562,7 +590,8 @@ public class I_Master : MonoBehaviour {
         //disable the last step
         Run.After(0.5f, () => {
             GetComponentInChildren<I_Step>().transform.parent.GetChild(currentStep -1).gameObject.SetActive(false);
-            Instantiate(resultPrefab, this.GetComponentInChildren<I_Module>().transform);
+            //Instantiate(resultPrefab, this.GetComponentInChildren<I_Module>().transform);
+            evaluationPanel.gameObject.SetActive(true);
         });
 
         if (otherSettings.printLogs)
