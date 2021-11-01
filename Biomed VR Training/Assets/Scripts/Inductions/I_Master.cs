@@ -343,6 +343,7 @@ public class I_Master : MonoBehaviour {
         if (currentStep == steps.Count - 1)
         {
             print("last step");
+            nextButton.GetComponent<Collider>().enabled = false;
             nextButton.transform.GetChild(0).gameObject.SetActive(false);
             nextButton.transform.GetChild(1).gameObject.SetActive(false);
             stepsCounterButton.transform.parent.gameObject.SetActive(false);
@@ -444,6 +445,7 @@ public class I_Master : MonoBehaviour {
         if (currentStep == steps.Count - 1)
         {
             print("last step");
+            nextButton.GetComponent<Collider>().enabled = false;
             nextButton.transform.GetChild(0).gameObject.SetActive(false);
             nextButton.transform.GetChild(1).gameObject.SetActive(false);
             stepsCounterButton.transform.parent.gameObject.SetActive(false);
@@ -517,6 +519,7 @@ public class I_Master : MonoBehaviour {
         if (currentStep == steps.Count - 2)
         {
             print("last step");
+            nextButton.GetComponent<Collider>().enabled = false;
             nextButton.transform.GetChild(0).gameObject.SetActive(false);
             nextButton.transform.GetChild(1).gameObject.SetActive(false);
             stepsCounterButton.transform.parent.gameObject.SetActive(false);

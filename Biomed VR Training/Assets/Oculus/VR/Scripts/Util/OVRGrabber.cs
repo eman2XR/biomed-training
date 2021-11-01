@@ -190,9 +190,37 @@ public class OVRGrabber : MonoBehaviour
 
         //highlight
         //if (grabbable.GetComponent<Outline>())
-          //grabbable.GetComponent<Outline>().enabled = true;
+        //grabbable.GetComponent<Outline>().enabled = true;
 
-        grabbable.OnTouch();
+        float closestMagSq = float.MaxValue;
+        OVRGrabbable closestGrabbable = null;
+        Collider closestGrabbableCollider = null;
+
+        // Iterate grab candidates and find the closest grabbable candidate to highlight
+        foreach (OVRGrabbable grabbable1 in m_grabCandidates.Keys)
+        {
+            bool canGrab = !(grabbable1.isGrabbed && !grabbable1.allowOffhandGrab);
+            if (!canGrab)
+            {
+                continue;
+            }
+
+            for (int j = 0; j < grabbable1.grabPoints.Length; ++j)
+            {
+                Collider grabbableCollider = grabbable1.grabPoints[j];
+                // Store the closest grabbable
+                Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
+                float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
+                if (grabbableMagSq < closestMagSq)
+                {
+                    closestMagSq = grabbableMagSq;
+                    closestGrabbable = grabbable1;
+                    closestGrabbableCollider = grabbableCollider;
+                }
+
+                closestGrabbable.OnTouch();
+            }
+        }
     }
 
     void OnTriggerExit(Collider otherCollider)

@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/old MAIN.unity
     guid: fcaa0ca66d893b34884f76c349727bb2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MAIN.unity
     guid: ed2a1258287aebb4dbfdad756f23df0d
   - enabled: 0
@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MAIN (demo).unity
     guid: fc88957e4998ca845a696bd9be3b9c97
   m_configObjects: {}
